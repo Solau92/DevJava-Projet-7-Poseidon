@@ -1,4 +1,4 @@
-package com.nnk.springboot.service;
+package com.nnk.springboot.service.interfaces;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;

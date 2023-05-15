@@ -2,6 +2,7 @@ package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.service.interfaces.RatingService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
