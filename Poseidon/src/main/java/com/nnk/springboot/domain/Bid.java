@@ -7,9 +7,9 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "bidlist")
+@Table(name = "bid")
 @Data
-public class BidList {
+public class Bid {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class BidList {
 
 	private String benchmark;
 
-	private LocalDate bidListDate;
+	private LocalDate bidDate;
 
 	private String commentary;
 
