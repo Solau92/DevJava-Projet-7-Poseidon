@@ -22,8 +22,8 @@ public class BidServiceImpl implements BidService {
 	}
 
 	@Override
-	public Bid save(Bid bidList) {
-		return bidRepository.save(bidList);
+	public Bid save(Bid bid) {
+		return bidRepository.save(bid);
 	}
 
 	public Bid findById(Integer id) {
@@ -31,17 +31,17 @@ public class BidServiceImpl implements BidService {
 		Optional<Bid> optionalBL = bidRepository.findById(id);
 
 		if(optionalBL.isEmpty()) {
-			throw new IllegalArgumentException("Invalid bidList Id: " + id);
+			throw new IllegalArgumentException("Invalid bid Id: " + id);
 		}
 		return optionalBL.get();
 
 	}
 
-	public void delete(Bid bidList) {
-		Optional<Bid> optionalBL = bidRepository.findById(bidList.getId());
+	public void delete(Bid bid) {
+		Optional<Bid> optionalBL = bidRepository.findById(bid.getId());
 		if(optionalBL.isEmpty()) {
-			throw new IllegalArgumentException("Invalid bidList Id: " + bidList.getId());
+			throw new IllegalArgumentException("Invalid bid Id: " + bid.getId());
 		}
-		bidRepository.delete(bidList);
+		bidRepository.delete(bid);
 	}
 }

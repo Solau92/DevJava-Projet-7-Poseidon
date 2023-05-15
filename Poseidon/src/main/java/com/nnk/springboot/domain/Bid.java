@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public class Bid {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@NotBlank(message = "Account is mandatory")
@@ -21,6 +22,7 @@ public class Bid {
 	@NotBlank(message = "Type is mandatory")
 	private String type;
 
+	@Positive(message = "Must be a positive number")
 	private Double bidQuantity;
 
 	private Double askQuantity;

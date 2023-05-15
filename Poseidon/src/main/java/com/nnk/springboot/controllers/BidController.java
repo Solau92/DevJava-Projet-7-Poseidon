@@ -57,6 +57,7 @@ public class BidController {
 	public String updateBid(@PathVariable("id") Integer id, @Valid Bid bid,
 	                        BindingResult result, Model model) {
 
+		// TO DO : si pas d'erreur plutôt (voir up)
 		if (result.hasErrors()) {
 			return "bid/update";
 		}

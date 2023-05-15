@@ -1,10 +1,11 @@
 DROP DATABASE demo;
-
 CREATE DATABASE demo;
 
 USE demo;
 
-CREATE TABLE BidList (
+DROP TABLE CurvePoint;
+
+CREATE TABLE bid (
   id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
@@ -57,9 +58,9 @@ CREATE TABLE Trade (
   PRIMARY KEY (TradeId)
 );
 
-CREATE TABLE CurvePoint (
+CREATE TABLE curvepoint (
   id int NOT NULL AUTO_INCREMENT,
-  CurveId tinyint,
+  curveId int,
   asOfDate TIMESTAMP,
   term DOUBLE ,
   value DOUBLE ,
