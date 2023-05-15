@@ -34,7 +34,6 @@ public class BidServiceImpl implements BidService {
 			throw new IllegalArgumentException("Invalid bid Id: " + id);
 		}
 		return optionalBL.get();
-
 	}
 
 	public void delete(Bid bid) {

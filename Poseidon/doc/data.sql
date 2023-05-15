@@ -3,7 +3,7 @@ CREATE DATABASE demo;
 
 USE demo;
 
-DROP TABLE CurvePoint;
+DROP TABLE Rating;
 
 CREATE TABLE bid (
   id int NOT NULL AUTO_INCREMENT,
@@ -55,7 +55,7 @@ CREATE TABLE Trade (
   sourceListId VARCHAR(125),
   side VARCHAR(125),
 
-  PRIMARY KEY (TradeId)
+  PRIMARY KEY (Id)
 );
 
 CREATE TABLE curvepoint (
@@ -69,7 +69,7 @@ CREATE TABLE curvepoint (
   PRIMARY KEY (Id)
 );
 
-CREATE TABLE Rating (
+CREATE TABLE rating (
   id int NOT NULL AUTO_INCREMENT,
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),

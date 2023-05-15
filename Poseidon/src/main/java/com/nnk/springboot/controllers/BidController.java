@@ -46,7 +46,6 @@ public class BidController {
 		try{
 			Bid bid = bidService.findById(id);
 			model.addAttribute("bid", bid);
-
 		} catch (IllegalArgumentException exception){
 			// TODO : message d'erreur ??
 		}
@@ -69,7 +68,6 @@ public class BidController {
 
 	@GetMapping("/bid/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find Bid by Id and delete the bid, return to Bid list
 
 		try {
 			Bid bid = bidService.findById(id);
@@ -78,9 +76,7 @@ public class BidController {
 
 		} catch (IllegalArgumentException exception){
 			// TODO : message d'erreur ??
-
 		}
-
 		return "redirect:/bid/list";
 	}
 
