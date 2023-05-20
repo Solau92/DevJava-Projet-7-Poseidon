@@ -54,7 +54,7 @@ public class RuleController {
     }
 
     @PostMapping("/rule/update/{id}")
-    public String updateRuleName(@PathVariable("id") Integer id, @Valid Rule rule,
+    public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule,
                              BindingResult result, Model model) {
         if(!result.hasErrors()){
             rule.setId(id);
@@ -66,7 +66,7 @@ public class RuleController {
     }
 
     @GetMapping("/rule/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+    public String deleteRule(@PathVariable("id") Integer id, Model model) {
         try {
             Rule rule = ruleService.findById(id);
             ruleService.delete(rule);

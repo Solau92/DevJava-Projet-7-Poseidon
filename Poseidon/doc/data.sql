@@ -3,7 +3,7 @@ CREATE DATABASE demo;
 
 USE demo;
 
-DROP TABLE Rating;
+DROP TABLE user;
 
 CREATE TABLE bid (
   id int NOT NULL AUTO_INCREMENT,
@@ -32,7 +32,7 @@ CREATE TABLE bid (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Trade (
+CREATE TABLE trade (
   id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE rating (
   PRIMARY KEY (Id)
 );
 
-CREATE TABLE RuleName (
+CREATE TABLE rule (
   id int NOT NULL AUTO_INCREMENT,
   name VARCHAR(125),
   description VARCHAR(125),
@@ -91,7 +91,7 @@ CREATE TABLE RuleName (
   PRIMARY KEY (Id)
 );
 
-CREATE TABLE Users (
+CREATE TABLE user (
   id int NOT NULL AUTO_INCREMENT,
   username VARCHAR(125),
   password VARCHAR(125),
@@ -101,5 +101,5 @@ CREATE TABLE Users (
   PRIMARY KEY (Id)
 );
 
-insert into Users(fullname, username, password, role) values("Administrator", "admin", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "ADMIN");
-insert into Users(fullname, username, password, role) values("User", "user", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "USER");
+insert into User(fullname, username, password, role) values("Administrator", "admin", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "ADMIN");
+insert into User(fullname, username, password, role) values("User", "user", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "USER");
