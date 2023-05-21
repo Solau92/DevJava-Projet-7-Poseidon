@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.service.CurvePointServiceImpl;
+import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,13 +18,18 @@ public class CurvePointController {
 
 	private CurvePointServiceImpl curvePointService;
 
-	public CurvePointController(CurvePointServiceImpl curvePointService) {
+	private UserServiceImpl userService;
+
+	public CurvePointController(CurvePointServiceImpl curvePointService, UserServiceImpl userService) {
 		this.curvePointService = curvePointService;
+		this.userService = userService;
 	}
 
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
 		model.addAttribute("curvePoints", curvePointService.findAll());
+		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+
 		return "curvePoint/list";
 	}
 

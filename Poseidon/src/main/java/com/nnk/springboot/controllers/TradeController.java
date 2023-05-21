@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.service.TradeServiceImpl;
+import com.nnk.springboot.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +20,18 @@ public class TradeController {
 
     private TradeServiceImpl tradeService;
 
-    public TradeController(TradeServiceImpl tradeService){
-        this.tradeService = tradeService;
+    private UserServiceImpl userService;
 
+    public TradeController(TradeServiceImpl tradeService, UserServiceImpl userService){
+        this.tradeService = tradeService;
+        this.userService = userService;
     }
 
     @RequestMapping("/trade/list")
     public String home(Model model)
     {
         model.addAttribute("trades", tradeService.findAll());
+        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
         return "trade/list";
     }
 

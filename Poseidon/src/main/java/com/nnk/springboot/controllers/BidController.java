@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.service.BidServiceImpl;
+import com.nnk.springboot.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,13 +17,17 @@ public class BidController {
 
 	private BidServiceImpl bidService;
 
-	public BidController(BidServiceImpl bidService) {
+	private UserServiceImpl userService;
+
+	public BidController(BidServiceImpl bidService, UserServiceImpl userService) {
 		this.bidService = bidService;
+		this.userService = userService;
 	}
 
 	@RequestMapping("/bid/list")
 	public String home(Model model) {
 		model.addAttribute("bids", bidService.findAll());
+//		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
 		return "bid/list";
 	}
 

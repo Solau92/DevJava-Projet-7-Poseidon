@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.service.RuleServiceImpl;
+import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,14 +19,18 @@ public class RuleController {
 
     private RuleServiceImpl ruleService;
 
-    public RuleController(RuleServiceImpl ruleService){
+    private UserServiceImpl userService;
+
+    public RuleController(RuleServiceImpl ruleService, UserServiceImpl userService){
         this.ruleService = ruleService;
+        this.userService = userService;
     }
 
     @RequestMapping("/rule/list")
     public String home(Model model)
     {
         model.addAttribute("rules", ruleService.findAll());
+        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
         return "rule/list";
     }
 

@@ -14,4 +14,8 @@ public interface UserService {
 	User findById(Integer id);
 
 	void delete(User user);
+
+//	User getLoggedUser();
+//
+//	String getDefaultUrl();
 }

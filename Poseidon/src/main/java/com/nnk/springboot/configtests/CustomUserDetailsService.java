@@ -2,6 +2,7 @@ package com.nnk.springboot.configtests;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +18,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	private UserRepository userRepository;
 
-	public CustomUserDetailsService(UserRepository userRepository) {
+	private UserServiceImpl userService;
+
+	public CustomUserDetailsService(UserRepository userRepository, UserServiceImpl userService) {
+
 		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	@Override
@@ -33,14 +38,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> listAutho = new ArrayList<>();
 		listAutho.add(new SimpleGrantedAuthority(user.getRole()));
 
-		System.out.println("Role dans loadUser... : " + user.getRole());
-		System.out.println("Liste autho : " + listAutho);
-
 		return new org.springframework.security.core.userdetails.User(
 				user.getUsername(),
 				user.getPassword(),
 				listAutho
 		);
 	}
+
+//	public boolean hasRole(String role) {
+//
+//		User user = userService.getLoggedUser();
+//
+//		return user.getRole().equals(role);
+//	}
 
 }

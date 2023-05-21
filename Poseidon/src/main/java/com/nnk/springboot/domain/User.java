@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.util.ValidPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -18,7 +19,8 @@ public class User {
 	private String username;
 
 	@NotBlank(message = "Password is mandatory")
-	@Size(min = 4, message = "Password must contain at least 4 characters") // 8
+	@ValidPassword
+//	@Size(min = 4, message = "Password must contain at least 4 characters") // 8
 	private String password;
 
 	@NotBlank(message = "FullName is mandatory")

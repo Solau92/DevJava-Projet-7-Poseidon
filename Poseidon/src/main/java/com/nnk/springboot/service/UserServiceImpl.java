@@ -1,9 +1,10 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.interfaces.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -50,4 +51,20 @@ public class UserServiceImpl implements UserService {
 		}
 		userRepository.delete(user);
 	}
+
+//	@Override
+	public User getLoggedUser() {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return userRepository.findByUsername(authentication == null ? "" : authentication.getName());
+	}
+
+//	@Override
+//	public String getDefaultUrl() {
+//
+//		if(getLoggedUser().getRole().equals("ADMIN")) {
+//			return "/user/list";
+//		}
+//		return "/bid/list";
+//	}
 }

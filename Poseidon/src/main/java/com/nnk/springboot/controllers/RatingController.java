@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.service.RatingServiceImpl;
+import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,14 +19,18 @@ public class RatingController {
 
     private RatingServiceImpl ratingService;
 
-    public RatingController(RatingServiceImpl ratingService) {
+    private UserServiceImpl userService;
+
+    public RatingController(RatingServiceImpl ratingService, UserServiceImpl userService) {
         this.ratingService = ratingService;
+        this.userService = userService;
     }
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
         model.addAttribute("ratings", ratingService.findAll());
+        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
         return "rating/list";
     }
 
