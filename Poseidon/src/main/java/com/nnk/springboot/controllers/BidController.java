@@ -27,7 +27,7 @@ public class BidController {
 	@RequestMapping("/bid/list")
 	public String home(Model model) {
 		model.addAttribute("bids", bidService.findAll());
-//		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
 		return "bid/list";
 	}
 

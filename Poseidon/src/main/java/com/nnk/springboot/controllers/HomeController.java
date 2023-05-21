@@ -16,8 +16,7 @@ public class HomeController
 	@RequestMapping("/admin/home")
 	public String adminHome(Model model)
 	{
-		//TODO : return another page...
-		return "redirect:/bidList/list";
+		return "redirect:/user/list";
 	}
 
 

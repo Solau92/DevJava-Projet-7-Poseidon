@@ -1,4 +1,4 @@
-package com.nnk.springboot.configtests;
+package com.nnk.springboot.config.security;
 
 import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -30,32 +31,42 @@ public class SpringSecurityConfig {
 	}
 
 	@Bean
+	public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+		return new MySimpleUrlAuthenticationSuccessHandler();
+	}
+
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http
 				.authorizeHttpRequests(authorize ->
-						authorize
-								.requestMatchers("/css/**").permitAll()
-								.requestMatchers("/").permitAll()
-								.requestMatchers("/user/**").hasAuthority("ADMIN")
-								.requestMatchers("/bid/**", "/curvePoint/**", "/rating/**", "/trade/**", "/rule/**").authenticated()
+						{
+							try {
+								authorize
+										.requestMatchers("/css/**").permitAll()
+										.requestMatchers("/").permitAll()
+										.requestMatchers("/user/**", "/admin/**").hasAuthority("ADMIN")
+										.requestMatchers("/bid/**", "/curvePoint/**", "/rating/**", "/trade/**", "/rule/**").authenticated()
+										.requestMatchers("/app-logout", "/access-denied").permitAll()
+										.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler());
+							} catch (Exception e) {
+								throw new RuntimeException(e);
+							}
+						}
+
 				)
 				.formLogin(
 						form -> form
-								//								.loginPage("/login")
-								////								.loginProcessingUrl("/login")
-								//								.successHandler(loginSuccessHandler)
-								.defaultSuccessUrl("/bid/list")
+								.successHandler(myAuthenticationSuccessHandler())
 								.permitAll()
 				)
 				.oauth2Login(
 						o -> o
-								.defaultSuccessUrl("/bid/list")
-
-//				).logout(
-//						logout -> logout
-//								.logoutRequestMatcher(new AntPathRequestMatcher("/app-logout"))
-//								.logoutSuccessUrl("/login")
+								.successHandler(myAuthenticationSuccessHandler())
+				).logout(
+						logout -> logout
+								.logoutRequestMatcher(new AntPathRequestMatcher("/app-logout"))
+								.logoutSuccessUrl("/login")
 				);
 
 		return http.build();
@@ -66,6 +77,11 @@ public class SpringSecurityConfig {
 		auth
 				.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder());
+	}
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
 	}
 
 }
