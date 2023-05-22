@@ -3,7 +3,6 @@ package com.nnk.springboot.Poseidon.controller;
 import com.nnk.springboot.controllers.BidController;
 import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.BidRepository;
 import com.nnk.springboot.service.BidServiceImpl;
 import com.nnk.springboot.service.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.system.CapturedOutput;
 import org.springframework.boot.test.system.OutputCaptureExtension;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -28,7 +26,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@ActiveProfiles("test")
 @ExtendWith(OutputCaptureExtension.class)
 public class BidControllerTest {
 
@@ -208,3 +205,4 @@ public class BidControllerTest {
 	}
 
 }
+

@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.service.RatingServiceImpl;
 import com.nnk.springboot.service.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 
+@Slf4j
 @Controller
 public class RatingController {
 
     private RatingServiceImpl ratingService;
 
     private UserServiceImpl userService;
+
+    private String message;
+
 
     public RatingController(RatingServiceImpl ratingService, UserServiceImpl userService) {
         this.ratingService = ratingService;
@@ -31,6 +36,7 @@ public class RatingController {
     {
         model.addAttribute("ratings", ratingService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("message", message);
         return "rating/list";
     }
 
@@ -51,12 +57,14 @@ public class RatingController {
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         try{
-            Rating rating = ratingService.findById(id);
+            Rating rating = ratingService.findById(10);
             model.addAttribute("rating", rating);
+            return "rating/update";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }
-        return "rating/update";
+            log.error("Illegal Argument Exception, rating not found");
+            this.message = "Error : rating not found";
+            return "redirect:/rating/list";		}
+
     }
 
     @PostMapping("/rating/update/{id}")
@@ -79,9 +87,11 @@ public class RatingController {
             Rating rating = ratingService.findById(id);
             ratingService.delete(rating);
             model.addAttribute("ratings", ratingService.findAll());
+            return "redirect:/rating/list";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }
-        return "redirect:/rating/list";
+            log.error("Illegal Argument Exception, rating not found");
+            this.message = "Error : rating not found";
+            return "redirect:/rating/list";		}
+
     }
 }

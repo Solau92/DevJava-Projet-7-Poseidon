@@ -29,7 +29,7 @@ public class CurvePointServiceImpl implements CurvePointService {
 	}
 
 	@Override
-	public CurvePoint finById(Integer id) {
+	public CurvePoint findById(Integer id) {
 
 		Optional<CurvePoint> optionalCP = curvePointRepository.findById(id);
 

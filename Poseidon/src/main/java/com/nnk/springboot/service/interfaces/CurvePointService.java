@@ -11,7 +11,7 @@ public interface CurvePointService {
 
 	CurvePoint save(CurvePoint curvePoint);
 
-	CurvePoint finById(Integer id);
+	CurvePoint findById(Integer id);
 
 	void delete(CurvePoint curvePoint);
 }

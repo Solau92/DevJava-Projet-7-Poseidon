@@ -21,6 +21,8 @@ public class BidController {
 
 	private UserServiceImpl userService;
 
+	private String message;
+
 	public BidController(BidServiceImpl bidService, UserServiceImpl userService) {
 		this.bidService = bidService;
 		this.userService = userService;
@@ -30,6 +32,7 @@ public class BidController {
 	public String home(Model model) {
 		model.addAttribute("bids", bidService.findAll());
 		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("message", message);
 		return "bid/list";
 	}
 
@@ -53,11 +56,13 @@ public class BidController {
 		try{
 			Bid bid = bidService.findById(id);
 			model.addAttribute("bid", bid);
+			return "bid/update";
 		} catch (IllegalArgumentException exception){
-			// TODO : message d'erreur ??
-			log.error("Illegal Argument Exception");
+			log.error("Illegal Argument Exception, bid not found");
+			this.message = "Error : bid not found";
+			return "redirect:/bid/list";
 		}
-		return "bid/update";
+
 	}
 
 	@PostMapping("/bid/update/{id}")
@@ -81,12 +86,13 @@ public class BidController {
 			Bid bid = bidService.findById(id);
 			bidService.delete(bid);
 			model.addAttribute("bids", bidService.findAll());
+			return "redirect:/bid/list";
 
 		} catch (IllegalArgumentException exception){
-			// TODO : message d'erreur ??
-			log.error("Illegal Argument Exception");
+			log.error("Illegal Argument Exception, bid not found");
+			this.message = "Error : bid not found";
+			return "redirect:/bid/list";
 		}
-		return "redirect:/bid/list";
 	}
 
 }

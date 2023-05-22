@@ -1,11 +1,10 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.service.TradeServiceImpl;
 import com.nnk.springboot.service.UserServiceImpl;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,12 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+@Slf4j
 @Controller
 public class TradeController {
 
     private TradeServiceImpl tradeService;
 
     private UserServiceImpl userService;
+
+    private String message;
+
 
     public TradeController(TradeServiceImpl tradeService, UserServiceImpl userService){
         this.tradeService = tradeService;
@@ -32,11 +35,12 @@ public class TradeController {
     {
         model.addAttribute("trades", tradeService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("message", message);
         return "trade/list";
     }
 
     @GetMapping("/trade/add")
-    public String addUser(Trade trade) {
+    public String addTradeForm(Trade trade) {
         return "trade/add";
     }
 
@@ -55,9 +59,12 @@ public class TradeController {
         try{
             Trade trade = tradeService.findById(id);
             model.addAttribute("trade", trade);
+            return "trade/update";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }        return "trade/update";
+            log.error("Illegal Argument Exception, trade not found");
+            this.message = "Error : trade not found";
+            return "redirect:/trade/list";
+        }
     }
 
     @PostMapping("/trade/update/{id}")
@@ -78,8 +85,10 @@ public class TradeController {
             Trade trade = tradeService.findById(id);
             tradeService.delete(trade);
             model.addAttribute("trades", tradeService.findAll());
+            return "redirect:/trade/list";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }        return "redirect:/trade/list";
+            log.error("Illegal Argument Exception, trade not found");
+            this.message = "Error : trade not found";
+            return "redirect:/trade/list";                }
     }
 }
