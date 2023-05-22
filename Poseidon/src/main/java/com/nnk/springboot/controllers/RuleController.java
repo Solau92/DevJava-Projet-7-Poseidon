@@ -5,6 +5,7 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.service.RuleServiceImpl;
 import com.nnk.springboot.service.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
+@Slf4j
 @Controller
 public class RuleController {
 
     private RuleServiceImpl ruleService;
 
     private UserServiceImpl userService;
+
+    private String message;
 
     public RuleController(RuleServiceImpl ruleService, UserServiceImpl userService){
         this.ruleService = ruleService;
@@ -31,6 +35,7 @@ public class RuleController {
     {
         model.addAttribute("rules", ruleService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("message", message);
         return "rule/list";
     }
 
@@ -53,9 +58,12 @@ public class RuleController {
         try{
             Rule rule = ruleService.findById(id);
             model.addAttribute("rule", rule);
+            return "rule/update";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }        return "rule/update";
+            log.error("Illegal Argument Exception, rule not found");
+            this.message = "Error : rule not found";
+            return "redirect:/rule/list";
+        }
     }
 
     @PostMapping("/rule/update/{id}")
@@ -76,9 +84,11 @@ public class RuleController {
             Rule rule = ruleService.findById(id);
             ruleService.delete(rule);
             model.addAttribute("rules", ruleService.findAll());
+            return "redirect:/rule/list";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
-        }
-        return "redirect:/rule/list";
+            log.error("Illegal Argument Exception, rule not found");
+            this.message = "Error : rule not found";
+            return "redirect:/rule/list";           }
+
     }
 }
