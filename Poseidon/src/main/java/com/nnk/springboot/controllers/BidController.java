@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.service.BidServiceImpl;
 import com.nnk.springboot.service.UserServiceImpl;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 public class BidController {
 
@@ -53,6 +55,7 @@ public class BidController {
 			model.addAttribute("bid", bid);
 		} catch (IllegalArgumentException exception){
 			// TODO : message d'erreur ??
+			log.error("Illegal Argument Exception");
 		}
 		return "bid/update";
 	}
@@ -61,14 +64,14 @@ public class BidController {
 	public String updateBid(@PathVariable("id") Integer id, @Valid Bid bid,
 	                        BindingResult result, Model model) {
 
-		// TO DO : si pas d'erreur plutôt (voir up)
-		if (result.hasErrors()) {
-			return "bid/update";
+		if(!result.hasErrors()) {
+			bid.setId(id);
+			bidService.save(bid);
+			model.addAttribute("bids", bidService.findAll());
+			return "redirect:/bid/list";
 		}
-		bid.setId(id);
-		bidService.save(bid);
-		model.addAttribute("bids", bidService.findAll());
-		return "redirect:/bid/list";
+		return "bid/update";
+
 	}
 
 	@GetMapping("/bid/delete/{id}")
@@ -81,6 +84,7 @@ public class BidController {
 
 		} catch (IllegalArgumentException exception){
 			// TODO : message d'erreur ??
+			log.error("Illegal Argument Exception");
 		}
 		return "redirect:/bid/list";
 	}

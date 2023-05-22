@@ -27,7 +27,7 @@ public class BidServiceImpl implements BidService {
 		return bidRepository.save(bid);
 	}
 
-	public Bid findById(Integer id) {
+	public Bid findById(Integer id) throws IllegalArgumentException {
 
 		Optional<Bid> optionalBL = bidRepository.findById(id);
 
