@@ -1,13 +1,10 @@
 package com.nnk.springboot.Poseidon.controller;
 
-import com.nnk.springboot.controllers.BidController;
 import com.nnk.springboot.controllers.RuleController;
-import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.service.BidServiceImpl;
-import com.nnk.springboot.service.RuleServiceImpl;
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.RuleServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

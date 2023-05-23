@@ -15,7 +15,9 @@ public interface UserService {
 
 	void delete(User user);
 
-//	User getLoggedUser();
+	User findByUserName(String username);
+
+	//	User getLoggedUser();
 //
 //	String getDefaultUrl();
 }

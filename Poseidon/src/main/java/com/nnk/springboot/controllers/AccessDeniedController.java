@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ public class AccessDeniedController {
 	public String getAccessDenied(Model model){
 
 		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
-		model.addAttribute("message", "Forbidden");
+		model.addAttribute("message", "You are not authorized for the requested data");
 		return "access-denied";
 	}
 

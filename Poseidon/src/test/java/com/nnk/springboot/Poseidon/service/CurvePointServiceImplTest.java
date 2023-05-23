@@ -2,7 +2,7 @@ package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.service.CurvePointServiceImpl;
+import com.nnk.springboot.service.implementation.CurvePointServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -130,7 +130,7 @@ public class CurvePointServiceImplTest {
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> curvePointService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> curvePointService.delete(curvePoint1));
 
 	}
 

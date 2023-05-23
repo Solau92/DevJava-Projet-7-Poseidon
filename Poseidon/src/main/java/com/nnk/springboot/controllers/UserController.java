@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -40,6 +40,11 @@ public class UserController {
 
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
+
+        if(userService.findByUserName(user.getUsername()) != null) {
+            result.rejectValue("username", null, "There is already an account registered with this username");
+        }
+
         if (!result.hasErrors()) {
             userService.save(user);
             model.addAttribute("users", userService.findAll());

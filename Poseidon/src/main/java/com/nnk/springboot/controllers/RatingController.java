@@ -1,9 +1,8 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.service.RatingServiceImpl;
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.RatingServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

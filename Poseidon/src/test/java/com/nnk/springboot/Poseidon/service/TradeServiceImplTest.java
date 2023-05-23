@@ -2,7 +2,7 @@ package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
-import com.nnk.springboot.service.TradeServiceImpl;
+import com.nnk.springboot.service.implementation.TradeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -131,7 +131,7 @@ public class TradeServiceImplTest {
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> tradeService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> tradeService.delete(trade1));
 
 	}
 }

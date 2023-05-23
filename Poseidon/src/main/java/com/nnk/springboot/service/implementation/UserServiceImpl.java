@@ -1,4 +1,4 @@
-package com.nnk.springboot.service;
+package com.nnk.springboot.service.implementation;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
@@ -59,7 +59,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(authentication == null ? "" : authentication.getName());
 	}
 
-//	@Override
+	@Override
+	public User findByUserName(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	//	@Override
 //	public String getDefaultUrl() {
 //
 //		if(getLoggedUser().getRole().equals("ADMIN")) {

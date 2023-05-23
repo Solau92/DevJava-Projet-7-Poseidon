@@ -1,28 +1,30 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.service.RatingServiceImpl;
+import com.nnk.springboot.service.implementation.RatingServiceImpl;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ExtendWith(OutputCaptureExtension.class)
 public class RatingServiceImplTest {
 
 	@InjectMocks
@@ -124,14 +126,14 @@ public class RatingServiceImplTest {
 	}
 
 	@Test
-	void delete_Error_Test(){
+	void delete_Error_Test(CapturedOutput output){
 
 		// GIVEN
 		when(ratingRepository.findById(anyInt())).thenReturn(emptyOptional);
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> ratingService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> ratingService.delete(rating1));
 
 	}
 

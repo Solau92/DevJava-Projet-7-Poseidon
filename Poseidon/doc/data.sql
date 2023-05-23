@@ -3,8 +3,6 @@ CREATE DATABASE demo;
 
 USE demo;
 
-DROP TABLE user;
-
 CREATE TABLE bid (
   id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
@@ -74,7 +72,7 @@ CREATE TABLE rating (
   moodysRating VARCHAR(125),
   sandPRating VARCHAR(125),
   fitchRating VARCHAR(125),
-  orderNumber tinyint,
+  orderNumber int,
 
   PRIMARY KEY (Id)
 );
@@ -93,7 +91,7 @@ CREATE TABLE rule (
 
 CREATE TABLE user (
   id int NOT NULL AUTO_INCREMENT,
-  username VARCHAR(125),
+  username VARCHAR(125) UNIQUE,
   password VARCHAR(125),
   fullname VARCHAR(125),
   role VARCHAR(125),

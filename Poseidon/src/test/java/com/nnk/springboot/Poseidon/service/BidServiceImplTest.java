@@ -2,7 +2,7 @@ package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.repositories.BidRepository;
-import com.nnk.springboot.service.BidServiceImpl;
+import com.nnk.springboot.service.implementation.BidServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -131,7 +131,7 @@ public class BidServiceImplTest {
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> bidService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> bidService.delete(bid1));
 
 	}
 

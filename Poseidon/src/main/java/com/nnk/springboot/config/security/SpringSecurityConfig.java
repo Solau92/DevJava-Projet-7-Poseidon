@@ -1,6 +1,5 @@
 package com.nnk.springboot.config.security;
 
-import com.nnk.springboot.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,9 +20,6 @@ public class SpringSecurityConfig {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
-
-	//	@Autowired
-	//	private LoginSuccessHandler loginSuccessHandler;
 
 	@Bean
 	public static PasswordEncoder passwordEncoder() {

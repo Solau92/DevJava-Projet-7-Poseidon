@@ -2,7 +2,7 @@ package com.nnk.springboot.config.security;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

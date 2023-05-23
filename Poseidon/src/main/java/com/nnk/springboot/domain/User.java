@@ -20,7 +20,6 @@ public class User {
 
 	@NotBlank(message = "Password is mandatory")
 	@ValidPassword
-//	@Size(min = 4, message = "Password must contain at least 4 characters") // 8
 	private String password;
 
 	@NotBlank(message = "FullName is mandatory")

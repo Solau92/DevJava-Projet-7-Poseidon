@@ -1,4 +1,4 @@
-package com.nnk.springboot.service;
+package com.nnk.springboot.service.implementation;
 
 import com.nnk.springboot.domain.Bid;
 import com.nnk.springboot.repositories.BidRepository;

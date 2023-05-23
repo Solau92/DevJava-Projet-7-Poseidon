@@ -2,14 +2,13 @@ package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Rule;
 import com.nnk.springboot.repositories.RuleRepository;
-import com.nnk.springboot.service.RuleServiceImpl;
+import com.nnk.springboot.service.implementation.RuleServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +131,7 @@ public class RuleServiceImplTest {
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> ruleService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> ruleService.delete(rule1));
 
 	}
 }

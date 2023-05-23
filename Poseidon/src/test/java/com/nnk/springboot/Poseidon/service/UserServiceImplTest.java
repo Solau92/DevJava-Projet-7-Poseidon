@@ -2,7 +2,7 @@ package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.service.UserServiceImpl;
+import com.nnk.springboot.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -133,7 +133,7 @@ public class UserServiceImplTest {
 
 		// WHEN
 		// THEN
-		assertThrows(IllegalArgumentException.class, () -> userService.findById(5));
+		assertThrows(IllegalArgumentException.class, () -> userService.delete(user1));
 
 	}
 }
