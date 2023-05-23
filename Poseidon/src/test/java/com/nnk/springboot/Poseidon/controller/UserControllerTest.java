@@ -19,8 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -107,13 +106,26 @@ public class UserControllerTest {
 	}
 
 	@Test
-	void validate_Error_Test(){
+	void validate_ResultHasError_Test(){
 
 		// GIVEN
 		when(bindingResult.hasErrors()).thenReturn(true);
 
 		// WHEN
 		String result = userController.validate(user2, bindingResult, model);
+
+		// THEN
+		assertEquals("user/add", result);
+	}
+
+	@Test
+	void validate_UserNameAlreadyExists_Test(){
+
+		// GIVEN
+		when(userService.findByUserName(anyString())).thenReturn(user1);
+
+		// WHEN
+		String result = userController.validate(user1, bindingResult, model);
 
 		// THEN
 		assertEquals("user/add", result);

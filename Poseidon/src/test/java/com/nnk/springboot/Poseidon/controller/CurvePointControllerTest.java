@@ -107,6 +107,19 @@ public class CurvePointControllerTest {
 	}
 
 	@Test
+	void validate_ResultHasError_Test(){
+
+		// GIVEN
+		when(bindingResult.hasErrors()).thenReturn(true);
+
+		// WHEN
+		String result = curvePointController.validate(curvePoint2, bindingResult, model);
+
+		// THEN
+		assertEquals("curvePoint/add", result);
+	}
+
+	@Test
 	void showUpdateForm_Ok_Test(){
 
 		// GIVEN

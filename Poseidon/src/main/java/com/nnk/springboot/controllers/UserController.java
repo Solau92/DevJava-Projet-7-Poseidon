@@ -43,6 +43,7 @@ public class UserController {
 
         if(userService.findByUserName(user.getUsername()) != null) {
             result.rejectValue("username", null, "There is already an account registered with this username");
+            return "user/add";
         }
 
         if (!result.hasErrors()) {

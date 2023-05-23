@@ -16,8 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -135,5 +134,18 @@ public class UserServiceImplTest {
 		// THEN
 		assertThrows(IllegalArgumentException.class, () -> userService.delete(user1));
 
+	}
+
+	@Test
+	void findByUserName_Ok_Test(){
+
+		// GIVEN
+		when(userRepository.findByUsername(anyString())).thenReturn(user1);
+
+		// WHEN
+		User result = userService.findByUserName("username1");
+
+		// THEN
+		assertEquals(user1, result);
 	}
 }
