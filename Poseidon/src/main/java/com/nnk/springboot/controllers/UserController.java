@@ -1,12 +1,9 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.UserServiceImpl;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+@Slf4j
 @Controller
 public class UserController {
 
     private UserServiceImpl userService;
+
+    String message;
 
     public UserController(UserServiceImpl userService){
         this.userService = userService;
@@ -29,11 +29,12 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("message", message);
         return "user/list";
     }
 
     @GetMapping("/user/add")
-    public String addUser(User bid) {
+    public String addUserForm(User bid) {
         return "user/add";
     }
 
@@ -54,10 +55,13 @@ public class UserController {
             User user = userService.findById(id);
             user.setPassword("");
             model.addAttribute("user", user);
+            return "user/update";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
+            log.error("Illegal Argument Exception, user not found");
+            this.message = "Error : user not found";
+            return "redirect:/user/list";
         }
-        return "user/update";
+
     }
 
     @PostMapping("/user/update/{id}")
@@ -79,9 +83,12 @@ public class UserController {
             User user = userService.findById(id);
             userService.delete(user);
             model.addAttribute("users", userService.findAll());
+            return "redirect:/user/list";
         } catch (IllegalArgumentException exception){
-            // TODO : message d'erreur ??
+            log.error("Illegal Argument Exception, user not found");
+            this.message = "Error : user not found";
+            return "redirect:/user/list";
         }
-        return "redirect:/user/list";
+
     }
 }
