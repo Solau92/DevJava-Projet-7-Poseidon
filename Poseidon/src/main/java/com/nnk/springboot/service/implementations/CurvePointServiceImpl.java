@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.repositories.CurvePointRepository;
+import com.nnk.springboot.repository.CurvePointRepository;
 import com.nnk.springboot.service.interfaces.CurvePointService;
 import org.springframework.stereotype.Service;
 

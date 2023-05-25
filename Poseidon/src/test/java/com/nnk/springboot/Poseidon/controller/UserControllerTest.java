@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.controller;
 
-import com.nnk.springboot.controllers.UserController;
+import com.nnk.springboot.controller.UserController;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.service.implementation.UserServiceImpl;
+import com.nnk.springboot.service.implementations.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

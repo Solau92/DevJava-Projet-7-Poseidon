@@ -1,11 +1,10 @@
 package com.nnk.springboot.Poseidon.controller;
 
-import com.nnk.springboot.controllers.HomeController;
+import com.nnk.springboot.controller.HomeController;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.ui.Model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

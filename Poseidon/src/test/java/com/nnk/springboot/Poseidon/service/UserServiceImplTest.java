@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.service.implementation.UserServiceImpl;
+import com.nnk.springboot.repository.UserRepository;
+import com.nnk.springboot.service.implementations.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

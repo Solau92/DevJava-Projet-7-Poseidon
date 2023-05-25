@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.interfaces.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

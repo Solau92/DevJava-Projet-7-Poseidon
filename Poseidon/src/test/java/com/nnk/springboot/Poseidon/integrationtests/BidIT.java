@@ -1,7 +1,7 @@
 package com.nnk.springboot.Poseidon.integrationtests;
 
 import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.repositories.BidRepository;
+import com.nnk.springboot.repository.BidRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

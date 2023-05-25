@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.repositories.BidRepository;
+import com.nnk.springboot.repository.BidRepository;
 import com.nnk.springboot.service.interfaces.BidService;
 import org.springframework.stereotype.Service;
 

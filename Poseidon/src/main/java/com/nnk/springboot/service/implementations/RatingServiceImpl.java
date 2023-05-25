@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.repository.RatingRepository;
 import com.nnk.springboot.service.interfaces.RatingService;
 import org.springframework.stereotype.Service;
 

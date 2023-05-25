@@ -1,8 +1,8 @@
-package com.nnk.springboot.controllers;
+package com.nnk.springboot.controller;
 
 import com.nnk.springboot.domain.Rule;
-import com.nnk.springboot.service.implementation.RuleServiceImpl;
-import com.nnk.springboot.service.implementation.UserServiceImpl;
+import com.nnk.springboot.service.implementations.RuleServiceImpl;
+import com.nnk.springboot.service.implementations.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

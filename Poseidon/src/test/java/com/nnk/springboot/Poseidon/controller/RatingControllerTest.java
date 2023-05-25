@@ -1,10 +1,10 @@
 package com.nnk.springboot.Poseidon.controller;
 
-import com.nnk.springboot.controllers.RatingController;
+import com.nnk.springboot.controller.RatingController;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.service.implementation.RatingServiceImpl;
-import com.nnk.springboot.service.implementation.UserServiceImpl;
+import com.nnk.springboot.service.implementations.RatingServiceImpl;
+import com.nnk.springboot.service.implementations.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Rule;
-import com.nnk.springboot.repositories.RuleRepository;
-import com.nnk.springboot.service.implementation.RuleServiceImpl;
+import com.nnk.springboot.repository.RuleRepository;
+import com.nnk.springboot.service.implementations.RuleServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.service.implementation.CurvePointServiceImpl;
+import com.nnk.springboot.repository.CurvePointRepository;
+import com.nnk.springboot.service.implementations.CurvePointServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

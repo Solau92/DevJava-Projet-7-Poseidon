@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Bid;
-import com.nnk.springboot.repositories.BidRepository;
-import com.nnk.springboot.service.implementation.BidServiceImpl;
+import com.nnk.springboot.repository.BidRepository;
+import com.nnk.springboot.service.implementations.BidServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

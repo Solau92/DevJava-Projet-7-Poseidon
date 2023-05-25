@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.repositories.TradeRepository;
+import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.interfaces.TradeService;
 import org.springframework.stereotype.Service;
 

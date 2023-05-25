@@ -1,7 +1,7 @@
 package com.nnk.springboot.Poseidon.integrationtests;
 
 import com.nnk.springboot.domain.Rule;
-import com.nnk.springboot.repositories.RuleRepository;
+import com.nnk.springboot.repository.RuleRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.repositories.TradeRepository;
-import com.nnk.springboot.service.implementation.TradeServiceImpl;
+import com.nnk.springboot.repository.TradeRepository;
+import com.nnk.springboot.service.implementations.TradeServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

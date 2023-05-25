@@ -1,7 +1,7 @@
-package com.nnk.springboot.service.implementation;
+package com.nnk.springboot.service.implementations;
 
 import com.nnk.springboot.domain.Rule;
-import com.nnk.springboot.repositories.RuleRepository;
+import com.nnk.springboot.repository.RuleRepository;
 import com.nnk.springboot.service.interfaces.RuleService;
 import org.springframework.stereotype.Service;
 

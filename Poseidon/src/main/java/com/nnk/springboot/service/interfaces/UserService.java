@@ -1,6 +1,5 @@
 package com.nnk.springboot.service.interfaces;
 
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.User;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.nnk.springboot.Poseidon.service;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.service.implementation.RatingServiceImpl;
-import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.service.implementations.RatingServiceImpl;
+import com.nnk.springboot.repository.RatingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
