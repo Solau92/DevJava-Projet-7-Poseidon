@@ -11,12 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -63,7 +60,7 @@ public class Oauth2Controller {
 				User user = new User();
 				user.setUsername(userAttributes.get("login").toString());
 				user.setRole("USER");
-				user.setFullname("githubUser");
+				user.setFullname(userAttributes.get("login").toString() + " (githubUser)");
 				user.setPassword("123456A*");
 
 				userService.save(user);

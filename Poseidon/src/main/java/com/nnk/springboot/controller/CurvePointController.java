@@ -24,6 +24,9 @@ public class CurvePointController {
 
 	private String message;
 
+	private static String REDIRECT_CURVEPOINTLIST_URL = "redirect:/curvePoint/list";
+
+
 	public CurvePointController(CurvePointServiceImpl curvePointService, UserServiceImpl userService) {
 		this.curvePointService = curvePointService;
 		this.userService = userService;
@@ -33,6 +36,7 @@ public class CurvePointController {
 	public String home(Model model) {
 		model.addAttribute("curvePoints", curvePointService.findAll());
 		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("role", userService.getLoggedUser().getRole());
 		model.addAttribute("message", message);
 		return "curvePoint/list";
 	}
@@ -48,7 +52,7 @@ public class CurvePointController {
 		if(!result.hasErrors()) {
 			curvePointService.save(curvePoint);
 			model.addAttribute("curvePoints", curvePointService.findAll());
-			return "redirect:/curvePoint/list";
+			return REDIRECT_CURVEPOINTLIST_URL;
 		}
 		return "curvePoint/add";
 	}
@@ -64,7 +68,7 @@ public class CurvePointController {
 		} catch (IllegalArgumentException exception){
 			log.error("Illegal Argument Exception, curve point not found");
 			this.message = "Error : curve point not found";
-			return "redirect:/curvePoint/list";		}
+			return REDIRECT_CURVEPOINTLIST_URL;		}
 	}
 
 	@PostMapping("/curvePoint/update/{id}")
@@ -75,7 +79,7 @@ public class CurvePointController {
 			curvePoint.setId(id);
 			curvePointService.save(curvePoint);
 			model.addAttribute("curvePoints", curvePointService.findAll());
-			return "redirect:/curvePoint/list";
+			return REDIRECT_CURVEPOINTLIST_URL;
 		}
 		return "curvePoint/update";
 	}
@@ -87,11 +91,11 @@ public class CurvePointController {
 			CurvePoint curvePoint = curvePointService.findById(id);
 			curvePointService.delete(curvePoint);
 			model.addAttribute("curvePoints", curvePointService.findAll());
-			return "redirect:/curvePoint/list";
+			return REDIRECT_CURVEPOINTLIST_URL;
 
 		} catch (IllegalArgumentException exception) {
 			log.error("Illegal Argument Exception, curve point not found");
 			this.message = "Error : curve point not found";
-			return "redirect:/curve point/list";		}
+			return REDIRECT_CURVEPOINTLIST_URL;		}
 	}
 }

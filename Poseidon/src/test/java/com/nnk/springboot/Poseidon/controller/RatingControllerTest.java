@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(OutputCaptureExtension.class)
-public class RatingControllerTest {
+class RatingControllerTest {
 
 	@InjectMocks
 	private RatingController ratingController;

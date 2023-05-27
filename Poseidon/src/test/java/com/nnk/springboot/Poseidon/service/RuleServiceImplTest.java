@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 @SpringBootTest
-public class RuleServiceImplTest {
+class RuleServiceImplTest {
 
 	@InjectMocks
 	private RuleServiceImpl ruleService;

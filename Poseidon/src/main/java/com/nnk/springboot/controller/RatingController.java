@@ -24,6 +24,9 @@ public class RatingController {
 
     private String message;
 
+    private static String REDIRECT_RATINGLIST_URL = "redirect:/rating/list";
+
+
 
     public RatingController(RatingServiceImpl ratingService, UserServiceImpl userService) {
         this.ratingService = ratingService;
@@ -35,6 +38,7 @@ public class RatingController {
     {
         model.addAttribute("ratings", ratingService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("role", userService.getLoggedUser().getRole());
         model.addAttribute("message", message);
         return "rating/list";
     }
@@ -49,7 +53,7 @@ public class RatingController {
         if (!result.hasErrors()) {
             ratingService.save(rating);
             model.addAttribute("ratings", ratingService.findAll());
-            return "redirect:/rating/list";
+            return REDIRECT_RATINGLIST_URL;
         }        return "rating/add";
     }
 
@@ -62,7 +66,7 @@ public class RatingController {
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, rating not found");
             this.message = "Error : rating not found";
-            return "redirect:/rating/list";		}
+            return REDIRECT_RATINGLIST_URL;		}
 
     }
 
@@ -74,7 +78,7 @@ public class RatingController {
             rating.setId(id);
             ratingService.save(rating);
             model.addAttribute("ratings", ratingService.findAll());
-            return "redirect:/rating/list";
+            return REDIRECT_RATINGLIST_URL;
         }
         return "rating/update";
     }
@@ -86,11 +90,12 @@ public class RatingController {
             Rating rating = ratingService.findById(id);
             ratingService.delete(rating);
             model.addAttribute("ratings", ratingService.findAll());
-            return "redirect:/rating/list";
+            return REDIRECT_RATINGLIST_URL;
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, rating not found");
             this.message = "Error : rating not found";
-            return "redirect:/rating/list";		}
+            return REDIRECT_RATINGLIST_URL;
+        }
 
     }
 }

@@ -18,12 +18,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	private UserRepository userRepository;
 
-	private UserServiceImpl userService;
-
-	public CustomUserDetailsService(UserRepository userRepository, UserServiceImpl userService) {
-
+	public CustomUserDetailsService(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.userService = userService;
 	}
 
 	@Override

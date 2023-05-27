@@ -3,7 +3,6 @@ package com.nnk.springboot.util;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import org.apache.catalina.valves.rewrite.InternalRewriteMap;
 import org.passay.*;
 
 import java.util.Arrays;

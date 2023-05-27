@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class CurvePointServiceImplTest {
+class CurvePointServiceImplTest {
 
 	@InjectMocks
 	private CurvePointServiceImpl curvePointService;

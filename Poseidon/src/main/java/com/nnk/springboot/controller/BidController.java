@@ -23,6 +23,8 @@ public class BidController {
 
 	private String message;
 
+	private static String REDIRECT_BIDLIST_URL = "redirect:/bid/list";
+
 	public BidController(BidServiceImpl bidService, UserServiceImpl userService) {
 		this.bidService = bidService;
 		this.userService = userService;
@@ -32,6 +34,7 @@ public class BidController {
 	public String home(Model model) {
 		model.addAttribute("bids", bidService.findAll());
 		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("role", userService.getLoggedUser().getRole());
 		model.addAttribute("message", message);
 		return "bid/list";
 	}
@@ -46,7 +49,7 @@ public class BidController {
 		if (!result.hasErrors()) {
 			bidService.save(bid);
 			model.addAttribute("bids", bidService.findAll());
-			return "redirect:/bid/list";
+			return REDIRECT_BIDLIST_URL;
 		}
 		return "bid/add";
 	}
@@ -60,7 +63,7 @@ public class BidController {
 		} catch (IllegalArgumentException exception){
 			log.error("Illegal Argument Exception, bid not found");
 			this.message = "Error : bid not found";
-			return "redirect:/bid/list";
+			return REDIRECT_BIDLIST_URL;
 		}
 
 	}
@@ -73,7 +76,7 @@ public class BidController {
 			bid.setId(id);
 			bidService.save(bid);
 			model.addAttribute("bids", bidService.findAll());
-			return "redirect:/bid/list";
+			return REDIRECT_BIDLIST_URL;
 		}
 		return "bid/update";
 
@@ -86,12 +89,12 @@ public class BidController {
 			Bid bid = bidService.findById(id);
 			bidService.delete(bid);
 			model.addAttribute("bids", bidService.findAll());
-			return "redirect:/bid/list";
+			return REDIRECT_BIDLIST_URL;
 
 		} catch (IllegalArgumentException exception){
 			log.error("Illegal Argument Exception, bid not found");
 			this.message = "Error : bid not found";
-			return "redirect:/bid/list";
+			return REDIRECT_BIDLIST_URL;
 		}
 	}
 

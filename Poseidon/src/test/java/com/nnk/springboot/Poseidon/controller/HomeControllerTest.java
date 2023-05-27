@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class HomeControllerTest {
+class HomeControllerTest {
 
 	@InjectMocks
 	private HomeController homeController;

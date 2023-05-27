@@ -24,6 +24,7 @@ public class TradeController {
 
     private String message;
 
+    private static String REDIRECT_TRADELIST_URL = "redirect:/trade/list";
 
     public TradeController(TradeServiceImpl tradeService, UserServiceImpl userService){
         this.tradeService = tradeService;
@@ -35,6 +36,7 @@ public class TradeController {
     {
         model.addAttribute("trades", tradeService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("role", userService.getLoggedUser().getRole());
         model.addAttribute("message", message);
         return "trade/list";
     }
@@ -49,7 +51,7 @@ public class TradeController {
         if (!result.hasErrors()) {
             tradeService.save(trade);
             model.addAttribute("trades", tradeService.findAll());
-            return "redirect:/trade/list";
+            return REDIRECT_TRADELIST_URL;
         }
         return "trade/add";
     }
@@ -63,7 +65,7 @@ public class TradeController {
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, trade not found");
             this.message = "Error : trade not found";
-            return "redirect:/trade/list";
+            return REDIRECT_TRADELIST_URL;
         }
     }
 
@@ -74,7 +76,7 @@ public class TradeController {
             trade.setId(id);
            tradeService.save(trade);
             model.addAttribute("trades", tradeService.findAll());
-            return "redirect:/trade/list";
+            return REDIRECT_TRADELIST_URL;
         }
         return "trade/update";
     }
@@ -85,10 +87,11 @@ public class TradeController {
             Trade trade = tradeService.findById(id);
             tradeService.delete(trade);
             model.addAttribute("trades", tradeService.findAll());
-            return "redirect:/trade/list";
+            return REDIRECT_TRADELIST_URL;
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, trade not found");
             this.message = "Error : trade not found";
-            return "redirect:/trade/list";                }
+            return REDIRECT_TRADELIST_URL;
+        }
     }
 }

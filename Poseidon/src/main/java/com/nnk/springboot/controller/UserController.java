@@ -21,6 +21,9 @@ public class UserController {
 
     String message;
 
+    private static String REDIRECT_USERLIST_URL = "redirect:/user/list";
+
+
     public UserController(UserServiceImpl userService){
         this.userService = userService;
     }
@@ -29,6 +32,7 @@ public class UserController {
     public String home(Model model)
     {
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
         model.addAttribute("message", message);
         return "user/list";
     }
@@ -49,7 +53,7 @@ public class UserController {
         if (!result.hasErrors()) {
             userService.save(user);
             model.addAttribute("users", userService.findAll());
-            return "redirect:/user/list";
+            return REDIRECT_USERLIST_URL;
         }
         return "user/add";
     }
@@ -65,7 +69,7 @@ public class UserController {
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, user not found");
             this.message = "Error : user not found";
-            return "redirect:/user/list";
+            return REDIRECT_USERLIST_URL;
         }
 
     }
@@ -77,7 +81,7 @@ public class UserController {
             user.setId(id);
             userService.save(user);
             model.addAttribute("users", userService.findAll());
-            return "redirect:/user/list";
+            return REDIRECT_USERLIST_URL;
         }
         return "user/update";
     }
@@ -89,11 +93,11 @@ public class UserController {
             User user = userService.findById(id);
             userService.delete(user);
             model.addAttribute("users", userService.findAll());
-            return "redirect:/user/list";
+            return REDIRECT_USERLIST_URL;
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, user not found");
             this.message = "Error : user not found";
-            return "redirect:/user/list";
+            return REDIRECT_USERLIST_URL;
         }
 
     }

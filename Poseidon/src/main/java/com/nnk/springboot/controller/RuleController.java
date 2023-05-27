@@ -23,6 +23,8 @@ public class RuleController {
 
     private String message;
 
+    private static String REDIRECT_RULELIST_URL = "redirect:/rule/list";
+
     public RuleController(RuleServiceImpl ruleService, UserServiceImpl userService){
         this.ruleService = ruleService;
         this.userService = userService;
@@ -33,6 +35,7 @@ public class RuleController {
     {
         model.addAttribute("rules", ruleService.findAll());
         model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+        model.addAttribute("role", userService.getLoggedUser().getRole());
         model.addAttribute("message", message);
         return "rule/list";
     }
@@ -47,7 +50,7 @@ public class RuleController {
         if (!result.hasErrors()) {
             ruleService.save(rule);
             model.addAttribute("rules", ruleService.findAll());
-            return "redirect:/rule/list";
+            return REDIRECT_RULELIST_URL;
         }        return "rule/add";
     }
 
@@ -60,7 +63,7 @@ public class RuleController {
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, rule not found");
             this.message = "Error : rule not found";
-            return "redirect:/rule/list";
+            return REDIRECT_RULELIST_URL;
         }
     }
 
@@ -71,7 +74,7 @@ public class RuleController {
             rule.setId(id);
             ruleService.save(rule);
             model.addAttribute("rules", ruleService.findAll());
-            return "redirect:/rule/list";
+            return REDIRECT_RULELIST_URL;
         }
         return "rule/update";
     }
@@ -82,11 +85,11 @@ public class RuleController {
             Rule rule = ruleService.findById(id);
             ruleService.delete(rule);
             model.addAttribute("rules", ruleService.findAll());
-            return "redirect:/rule/list";
+            return REDIRECT_RULELIST_URL;
         } catch (IllegalArgumentException exception){
             log.error("Illegal Argument Exception, rule not found");
             this.message = "Error : rule not found";
-            return "redirect:/rule/list";           }
+            return REDIRECT_RULELIST_URL;           }
 
     }
 }
