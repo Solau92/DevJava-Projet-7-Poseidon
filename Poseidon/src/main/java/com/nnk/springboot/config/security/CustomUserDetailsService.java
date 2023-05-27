@@ -45,11 +45,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 		);
 	}
 
-//	public boolean hasRole(String role) {
-//
-//		User user = userService.getLoggedUser();
-//
-//		return user.getRole().equals(role);
-//	}
-
 }

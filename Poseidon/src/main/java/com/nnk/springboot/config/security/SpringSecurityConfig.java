@@ -40,7 +40,7 @@ public class SpringSecurityConfig {
 							try {
 								authorize
 										.requestMatchers("/css/**").permitAll()
-										.requestMatchers("/").permitAll()
+										.requestMatchers("/", "/oauth2login").permitAll()
 										.requestMatchers("/user/**", "/admin/**").hasAuthority("ADMIN")
 										.requestMatchers("/bid/**", "/curvePoint/**", "/rating/**", "/trade/**", "/rule/**").authenticated()
 										.requestMatchers("/app-logout", "/access-denied").permitAll()
@@ -58,7 +58,7 @@ public class SpringSecurityConfig {
 				)
 				.oauth2Login(
 						o -> o
-								.successHandler(myAuthenticationSuccessHandler())
+								.defaultSuccessUrl("/oauth2login", true)
 				).logout(
 						logout -> logout
 								.logoutRequestMatcher(new AntPathRequestMatcher("/app-logout"))

@@ -16,7 +16,7 @@ public interface UserService {
 
 	User findByUserName(String username);
 
-	//	User getLoggedUser();
-//
-//	String getDefaultUrl();
+	User getLoggedUser();
+
+
 }

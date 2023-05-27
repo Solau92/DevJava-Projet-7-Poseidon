@@ -23,10 +23,6 @@ a
 1src/main/java/com/nnk/springboot/domain/Rule.java,a\6\a6b84de7823adc1349b935704d9ec944cefc11a3
 Ä
 Psrc/test/java/com/nnk/springboot/Poseidon/integrationtests/PasswordEncodeIT.java,1\b\1bd7446064a7eeaa6929b4c295aee15dee66cb59
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-ç
-]src/main/java/com/nnk/springboot/config/security/MySimpleUrlAuthenticationSuccessHandler.java,4\d\4d00187fcd8519c4c45fc7c033218222de957f7c
 
 Osrc/main/java/com/nnk/springboot/config/security/CustomAccessDeniedHandler.java,a\a\aa13d79ec4ca5be883cec361c8acf577c3a3d7b7
 }
@@ -43,8 +39,6 @@ Hsrc/main/java/com/nnk/springboot/controllers/AccessDeniedController.java,d\4\d
 doc/data.sql,b\5\b587c6e808d79a49964dbdaf42a38ce382a0b895
 Ñ
 Tsrc/test/java/com/nnk/springboot/Poseidon/controller/AccessDeniedControllerTest.java,a\3\a3684f5aced2074f4ced07e6f852ffa428babba8
-a
-1src/main/java/com/nnk/springboot/domain/User.java,0\f\0ffb8d668738e3d8b88cd4f2f5424aa52e3220e8
 |
 Lsrc/main/java/com/nnk/springboot/service/implementation/RuleServiceImpl.java,6\7\67cbbfe312dcd309324e1bca49bb8bf48391ecee
 ~

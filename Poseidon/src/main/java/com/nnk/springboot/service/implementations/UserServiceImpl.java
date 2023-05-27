@@ -3,12 +3,17 @@ package com.nnk.springboot.service.implementations;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repository.UserRepository;
 import com.nnk.springboot.service.interfaces.UserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,11 +57,46 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
-//	@Override
+	@Override
 	public User getLoggedUser() {
 
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//		User user = new User();
+//		user.setUsername("Oauth2GitHub");
+//
+//
+////		if (authentication.getAuthorities().contains("OAUTH2_USER")) {
+////			user.setUsername("Oauth2GitHub");
+////			return user;
+////		}
+//
+////		User user = (User) authentication.getPrincipal();
+//
+////		Authentication authentication = (Authentication) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//		//		.getPrincipal() avec Oauth2
+//
+//		if (userRepository.findByUsername(authentication.getName()) == null) {
+//			return user;
+//		} else {
+//			return userRepository.findByUsername(authentication.getName());
+//		}
+
+//		return userRepository.findByUsername(authentication == null ? "" : authentication.getName());
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return userRepository.findByUsername(authentication == null ? "" : authentication.getName());
+
+		if (SecurityContextHolder.getContext().getAuthentication() instanceof UsernamePasswordAuthenticationToken) {
+			return userRepository.findByUsername(authentication == null ? "" : authentication.getName());
+		}
+		else {
+			User user = new User();
+			user.setUsername(
+					((OAuth2AuthenticationToken)
+							SecurityContextHolder.getContext().getAuthentication()).getPrincipal().getAttribute("login"));
+			return user;
+		}
 	}
 
 	@Override
@@ -64,12 +104,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	//	@Override
-//	public String getDefaultUrl() {
-//
-//		if(getLoggedUser().getRole().equals("ADMIN")) {
-//			return "/user/list";
-//		}
-//		return "/bid/list";
-//	}
+	public User createOauth2User() {
+
+		//TODO
+		return new User();
+	}
 }

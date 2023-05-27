@@ -60,6 +60,17 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
 
 	protected String determineTargetUrl(final Authentication authentication) {
 
+		// Check si github --> redirect
+		// authorizedClientRegistrationId
+
+
+//		if (user.getPassword() == null) {
+//			httpServletResponse.sendRedirect("/OAuthRegister");
+//		    return roleTargetUrlMap.get(authorityName); (version user)
+//			return;
+//		}
+
+
 		Map<String, String> roleTargetUrlMap = new HashMap<>();
 		roleTargetUrlMap.put("USER", "/bid/list");
 		roleTargetUrlMap.put("ADMIN", "/admin/home");

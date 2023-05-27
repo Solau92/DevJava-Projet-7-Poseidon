@@ -17,7 +17,7 @@ public class AccessDeniedController {
 	@GetMapping("/access-denied")
 	public String getAccessDenied(Model model){
 
-		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+//		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
 		model.addAttribute("message", "You are not authorized for the requested data");
 		return "access-denied";
 	}
