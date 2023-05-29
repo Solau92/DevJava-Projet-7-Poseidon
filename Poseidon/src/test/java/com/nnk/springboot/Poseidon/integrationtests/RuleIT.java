@@ -1,47 +1,136 @@
 package com.nnk.springboot.Poseidon.integrationtests;
 
 import com.nnk.springboot.domain.Rule;
-import com.nnk.springboot.repository.RuleRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.nnk.springboot.service.implementations.RuleServiceImpl;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.Optional;
 
-@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
+@AutoConfigureMockMvc
 @SpringBootTest
-public class RuleIT {
+@ActiveProfiles("test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class RuleIT {
 
 	@Autowired
-	private RuleRepository ruleRepository;
+	private MockMvc mockMvc;
+
+	@Autowired
+	private RuleServiceImpl ruleService;
+
+	@Autowired
+	private WebApplicationContext context;
+
+	private Rule rule1 = new Rule();
+
+	private Rule rule2 = new Rule();
+
+
+	@BeforeEach
+	void setUp() throws Exception {
+
+		mockMvc = MockMvcBuilders
+				.webAppContextSetup(context)
+				.apply(springSecurity())
+				.build();
+	}
 
 	@Test
-	public void ruleTest() {
-		Rule rule = new Rule();
-		rule.setName("name");
+	@WithMockUser(username = "user")
+	@Order(1)
+	void saveRule_Ok_Test() throws Exception {
 
-		// Save
-		rule = ruleRepository.save(rule);
-		Assert.assertNotNull(rule.getId());
-		Assert.assertTrue(rule.getName().equals("name"));
+		rule1.setName("name1");
+		rule1.setDescription("description1");
+		rule1.setJson("json1");
 
-		// Update
-		rule.setName("name updated");
-		rule = ruleRepository.save(rule);
-		Assert.assertTrue(rule.getName().equals("name updated"));
+		mockMvc.perform(post("/rule/validate")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("name", rule1.getName())
+						.param("description", rule1.getDescription())
+						.param("json", rule1.getJson())
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rule/list"));
 
-		// Find
-		List<Rule> listResult = ruleRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
+		rule2.setName("name2");
+		rule2.setDescription("description2");
+		rule2.setJson("json2");
 
-		// Delete
-		Integer id = rule.getId();
-		ruleRepository.delete(rule);
-		Optional<Rule> ruleList = ruleRepository.findById(id);
-		Assert.assertFalse(ruleList.isPresent());
+		mockMvc.perform(post("/rule/validate")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("name", rule2.getName())
+						.param("description", rule2.getDescription())
+						.param("json", rule2.getJson())
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rule/list"));
+
+		Rule rule1Expected = ruleService.findById(1);
+		Rule rule2Expected = ruleService.findById(2);
+		List<Rule> ruleList = ruleService.findAll();
+
+		assertEquals(rule1.getName(), rule1Expected.getName());
+		assertEquals(rule2.getDescription(), rule2Expected.getDescription());
+		assertEquals(2, ruleList.size());
 	}
+
+	@Test
+	@WithMockUser(username = "user")
+	@Order(2)
+	void updateRule_Ok_Test() throws Exception {
+
+		rule1 = ruleService.findById(1);
+
+		mockMvc.perform(post("/rule/update/{id}", 1)
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("name", rule1.getName())
+						.param("description", "description4")
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rule/list"));
+
+		Rule rule1Expected = ruleService.findById(1);
+		List<Rule> ruleList = ruleService.findAll();
+
+		assertEquals("description4", rule1Expected.getDescription());
+		assertEquals(2, ruleList.size());
+	}
+
+	@Test
+	@WithMockUser(username = "user")
+	@Order(3)
+	void deleteRule_Ok_Test() throws Exception {
+
+		mockMvc.perform(get("/rule/delete/{id}", 2)
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rule/list"));
+
+		List<Rule> ruleList = ruleService.findAll();
+		assertEquals(1, ruleList.size());
+	}
+
 }

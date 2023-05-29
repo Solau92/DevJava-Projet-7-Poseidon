@@ -22,7 +22,7 @@ public class CurvePoint {
 
 	private Double term;
 
-	private Double value;
+	private Double cpvalue;
 
 	private LocalDate creationDate;
 

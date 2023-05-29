@@ -1,8 +1,3 @@
-DROP DATABASE demo;
-CREATE DATABASE demo;
-
-USE demo;
-
 CREATE TABLE bid (
   id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
@@ -98,6 +93,3 @@ CREATE TABLE users (
 
   PRIMARY KEY (Id)
 );
-
-insert into users(fullname, username, password, role) values("Administrator", "admin", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "ADMIN");
-insert into users(fullname, username, password, role) values("User", "user", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "USER");

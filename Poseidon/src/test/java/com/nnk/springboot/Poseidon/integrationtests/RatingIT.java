@@ -1,50 +1,137 @@
 package com.nnk.springboot.Poseidon.integrationtests;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.repository.RatingRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.nnk.springboot.service.implementations.RatingServiceImpl;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
-import java.util.Optional;
 
-@RunWith(SpringRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
+@AutoConfigureMockMvc
 @SpringBootTest
-public class RatingIT {
+@ActiveProfiles("test")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class RatingIT {
 
 	@Autowired
-	private RatingRepository ratingRepository;
+	private MockMvc mockMvc;
+
+	@Autowired
+	private RatingServiceImpl ratingService;
+
+	@Autowired
+	private WebApplicationContext context;
+
+	private Rating rating1 = new Rating();
+
+	private Rating rating2 = new Rating();
+
+
+	@BeforeEach
+	void setUp() throws Exception {
+
+		mockMvc = MockMvcBuilders
+				.webAppContextSetup(context)
+				.apply(springSecurity())
+				.build();
+	}
 
 	@Test
-	public void ratingTest() {
-		Rating rating = new Rating();
-		rating.setMoodysRating("Moodys Rating");
-		rating.setFitchRating("Fitch Rating");
-		rating.setSAndPRating("Sand PRating");
-		rating.setOrderNumber(10);
+	@WithMockUser(username = "user")
+	@Order(1)
+	void saveRating_Ok_Test() throws Exception {
 
-		// Save
-		rating = ratingRepository.save(rating);
-		Assert.assertNotNull(rating.getId());
-		Assert.assertTrue(rating.getOrderNumber() == 10);
+		rating1.setMoodysRating("mr1");
+		rating1.setSAndPRating("spr1");
+		rating1.setFitchRating("fr1");
 
-		// Update
-		rating.setOrderNumber(20);
-		rating = ratingRepository.save(rating);
-		Assert.assertTrue(rating.getOrderNumber() == 20);
+		mockMvc.perform(post("/rating/validate")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("moodysRating", rating1.getMoodysRating())
+						.param("sAndPRating", rating1.getSAndPRating())
+						.param("fitchRating", rating1.getFitchRating())
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rating/list"));
 
-		// Find
-		List<Rating> listResult = ratingRepository.findAll();
-		Assert.assertTrue(listResult.size() > 0);
+		rating2.setMoodysRating("mr2");
+		rating2.setSAndPRating("spr2");
+		rating2.setFitchRating("fr2");
 
-		// Delete
-		Integer id = rating.getId();
-		ratingRepository.delete(rating);
-		Optional<Rating> ratingList = ratingRepository.findById(id);
-		Assert.assertFalse(ratingList.isPresent());
+		mockMvc.perform(post("/rating/validate")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("moodysRating", rating2.getMoodysRating())
+						.param("sAndPRating", rating2.getSAndPRating())
+						.param("fitchRating", rating2.getFitchRating())
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rating/list"));
+
+		Rating rating1Expected = ratingService.findById(1);
+		Rating rating2Expected = ratingService.findById(2);
+		List<Rating> ratingList = ratingService.findAll();
+
+		assertEquals(rating1.getSAndPRating(), rating1Expected.getSAndPRating());
+		assertEquals(rating2.getFitchRating(), rating2Expected.getFitchRating());
+		assertEquals(2, ratingList.size());
 	}
+
+	@Test
+	@WithMockUser(username = "user")
+	@Order(2)
+	void updateRating_Ok_Test() throws Exception {
+
+		rating1 = ratingService.findById(1);
+
+		mockMvc.perform(post("/rating/update/{id}", 1)
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("moodysRating", rating1.getMoodysRating())
+						.param("sAndPRating", rating1.getSAndPRating())
+						.param("fitchRating", "fr4")
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rating/list"));
+
+		Rating rating1Expected = ratingService.findById(1);
+		List<Rating> ratingList = ratingService.findAll();
+
+		assertEquals("fr4", rating1Expected.getFitchRating());
+		assertEquals(2, ratingList.size());
+	}
+
+	@Test
+	@WithMockUser(username = "user")
+	@Order(3)
+	void deleteRating_Ok_Test() throws Exception {
+
+		mockMvc.perform(get("/rating/delete/{id}", 2)
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.with(csrf())
+				)
+				.andDo(print())
+				.andExpect(redirectedUrl("/rating/list"));
+
+		List<Rating> ratingList = ratingService.findAll();
+		assertEquals(1, ratingList.size());
+	}
+
 }

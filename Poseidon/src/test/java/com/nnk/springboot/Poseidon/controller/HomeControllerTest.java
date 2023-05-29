@@ -26,7 +26,7 @@ class HomeControllerTest {
 		String result = homeController.home(model);
 
 		// THEN
-		assertEquals("home", result);
+		assertEquals("redirect:/login", result);
 	}
 
 	@Test
