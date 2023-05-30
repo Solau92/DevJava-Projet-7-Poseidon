@@ -143,7 +143,7 @@ class UserServiceImplTest {
 		when(userRepository.findByUsername(anyString())).thenReturn(user1);
 
 		// WHEN
-		User result = userService.findByUserName("username1");
+		User result = userService.findByUsername("username1");
 
 		// THEN
 		assertEquals(user1, result);

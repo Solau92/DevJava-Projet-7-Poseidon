@@ -122,7 +122,7 @@ class UserControllerTest {
 	void validate_UserNameAlreadyExists_Test(){
 
 		// GIVEN
-		when(userService.findByUserName(anyString())).thenReturn(user1);
+		when(userService.findByUsername(anyString())).thenReturn(user1);
 
 		// WHEN
 		String result = userController.validate(user1, bindingResult, model);

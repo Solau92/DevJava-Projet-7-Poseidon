@@ -74,7 +74,7 @@ CREATE TABLE rating (
 
 CREATE TABLE rule (
   id int NOT NULL AUTO_INCREMENT,
-  name VARCHAR(125),
+  name VARCHAR(125) NOT NULL ,
   description VARCHAR(125),
   json VARCHAR(125),
   template VARCHAR(512),
@@ -86,10 +86,10 @@ CREATE TABLE rule (
 
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
-  username VARCHAR(125) UNIQUE,
-  password VARCHAR(125),
-  fullname VARCHAR(125),
-  role VARCHAR(125),
+username VARCHAR(125) NOT NULL UNIQUE,
+  password VARCHAR(125) NOT NULL ,
+  fullname VARCHAR(125) NOT NULL ,
+  role VARCHAR(125) NOT NULL ,
 
   PRIMARY KEY (Id)
 );
