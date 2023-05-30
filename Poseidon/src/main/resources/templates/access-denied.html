@@ -3,17 +3,39 @@
 <head>
     <meta charset="utf-8"/>
     <title>Spring Boot</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
 </head>
 
 <body>
-   <h3>Access Denied Exception</h3>
-   <div>
-       Logged in user: <b th:inline="text"  class="user"> [[${loggedUser}]] </b>
-	    <form th:action="@{/app-logout}" method="POST">
-	         <input type="submit" value="Logout"/>
-	    </form>
-   </div> 	 
-    <p class="error" th:text="${message}">Error</p>
+<h3>Access Denied Exception</h3>
+<div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <a href="/bid/list">Bids</a>&nbsp;|&nbsp;
+                <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+                <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+                <a href="/trade/list">Trades</a>&nbsp;|&nbsp;
+                <a href="/rule/list">Rules</a> |
+                <a href="/user/list" th:if="${role == 'ADMIN'}"> Users</a>
+            </div>
+            <div class="col-6 text-right">
+
+                Logged in user: <b th:inline="text" class="user"> [[${loggedUser}]] </b>
+
+                <form th:action="@{/app-logout}" method="POST">
+                    <input type="submit" value="Logout"/>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <p class="error" th:text="${message}">Error</p>
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>   

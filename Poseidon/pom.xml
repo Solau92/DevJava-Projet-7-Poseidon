@@ -115,6 +115,8 @@
 					<excludes>
 						<exclude>**/domain/*</exclude>
 						<exclude>**/repositories/*</exclude>
+						<exclude>**/util/*</exclude>
+						<exclude>**/config/*</exclude>
 						<exclude>**/PoseidonApplication.*</exclude>
 					</excludes>
 				</configuration>
@@ -157,6 +159,8 @@
 					<excludes>
 						<exclude>**/domain/*</exclude>
 						<exclude>**/repositories/*</exclude>
+						<exclude>**/util/*</exclude>
+						<exclude>**/config/*</exclude>
 						<exclude>**/PoseidonApplication.*</exclude>
 					</excludes>
 					<outputDirectory>${project.build.directory}/jacoco</outputDirectory>

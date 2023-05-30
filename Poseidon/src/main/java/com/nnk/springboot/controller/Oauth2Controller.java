@@ -3,6 +3,7 @@ package com.nnk.springboot.controller;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.service.implementations.UserServiceImpl;
 import io.micrometer.common.util.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+@Slf4j
 @Controller
 public class Oauth2Controller {
 
@@ -53,9 +55,8 @@ public class Oauth2Controller {
 
 			String userName = userAttributes.get("login").toString();
 
-//			model.addAttribute("loggedUser", userName + " (" + client.getClientRegistration().getClientName() + " user)");
-
-			if(userService.findByUserName(userName) == null){
+			if(userService.findByUsername(userName) == null){
+				log.info("user with username " + userName + " not found");
 
 				User user = new User();
 				user.setUsername(userAttributes.get("login").toString());
@@ -64,28 +65,11 @@ public class Oauth2Controller {
 				user.setPassword("123456A*");
 
 				userService.save(user);
+				log.info("user with username " + userName + " saved");
 			}
 
 		}
-
-
-//		model.addAttribute("loggedUser", client.getClientRegistration().getClientName() + " user");
-
 		return "redirect:/bid/list";
 	}
 
-//	@RequestMapping("/oauth2login")
-//	public String login(Model model) {
-//
-////		User loggedUser = userService.createOauth2User();
-//
-////		User loggedUser = new User();
-////		loggedUser.setUsername("Oauth2User");
-////		loggedUser.setRole("USER");
-////		userService.save(loggedUser);
-//
-////		model.addAttribute("loggedUser", name);
-//
-//		return "/bid/list";
-//	}
 }

@@ -3,11 +3,13 @@ package com.nnk.springboot.service.implementations;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repository.TradeRepository;
 import com.nnk.springboot.service.interfaces.TradeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class TradeServiceImpl implements TradeService {
 
@@ -32,6 +34,7 @@ public class TradeServiceImpl implements TradeService {
 		Optional<Trade> optionalT = tradeRepository.findById(id);
 
 		if(optionalT.isEmpty()) {
+			log.error("trade with id " + id + " not found");
 			throw new IllegalArgumentException("Invalid trade Id: " + id);
 		}
 		return optionalT.get();	}
@@ -40,6 +43,7 @@ public class TradeServiceImpl implements TradeService {
 	public void delete(Trade trade) {
 		Optional<Trade> optionalT = tradeRepository.findById(trade.getId());
 		if(optionalT.isEmpty()) {
+			log.error("trade with id " + trade.getId() + " not found");
 			throw new IllegalArgumentException("Invalid trade Id: " + trade.getId());
 		}
 		tradeRepository.delete(trade);

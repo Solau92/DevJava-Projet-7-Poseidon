@@ -1,4 +1,4 @@
-package com.nnk.springboot.config.security;
+package com.nnk.springboot.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

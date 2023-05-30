@@ -17,79 +17,90 @@ import jakarta.validation.Valid;
 @Controller
 public class RuleController {
 
-    private RuleServiceImpl ruleService;
+	private static String REDIRECT_RULELIST_URL = "redirect:/rule/list";
+	private RuleServiceImpl ruleService;
+	private UserServiceImpl userService;
+	private String message;
 
-    private UserServiceImpl userService;
+	public RuleController(RuleServiceImpl ruleService, UserServiceImpl userService) {
+		this.ruleService = ruleService;
+		this.userService = userService;
+	}
 
-    private String message;
+	@RequestMapping("/rule/list")
+	public String home(Model model) {
+		model.addAttribute("rules", ruleService.findAll());
+		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("role", userService.getLoggedUser().getRole());
+		model.addAttribute("message", message);
+		log.info("rule/list page display");
+		return "rule/list";
+	}
 
-    private static String REDIRECT_RULELIST_URL = "redirect:/rule/list";
+	@GetMapping("/rule/add")
+	public String addRuleForm(Rule ruled) {
+		log.info("rule/add page display");
+		return "rule/add";
+	}
 
-    public RuleController(RuleServiceImpl ruleService, UserServiceImpl userService){
-        this.ruleService = ruleService;
-        this.userService = userService;
-    }
+	@PostMapping("/rule/validate")
+	public String validate(@Valid Rule rule, BindingResult result, Model model) {
 
-    @RequestMapping("/rule/list")
-    public String home(Model model)
-    {
-        model.addAttribute("rules", ruleService.findAll());
-        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
-        model.addAttribute("role", userService.getLoggedUser().getRole());
-        model.addAttribute("message", message);
-        return "rule/list";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			ruleService.save(rule);
+			model.addAttribute("rules", ruleService.findAll());
+			return REDIRECT_RULELIST_URL;
+		}
+		log.info("result has error");
+		return "rule/add";
+	}
 
-    @GetMapping("/rule/add")
-    public String addRuleForm(Rule ruled) {
-        return "rule/add";
-    }
+	@GetMapping("/rule/update/{id}")
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
-    @PostMapping("/rule/validate")
-    public String validate(@Valid Rule rule, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            ruleService.save(rule);
-            model.addAttribute("rules", ruleService.findAll());
-            return REDIRECT_RULELIST_URL;
-        }        return "rule/add";
-    }
+		try {
+			Rule rule = ruleService.findById(id);
+			log.info("rule with id " + id + " found");
+			model.addAttribute("rule", rule);
+			return "rule/update";
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, rule not found");
+			this.message = "Error : rule not found";
+			return REDIRECT_RULELIST_URL;
+		}
+	}
 
-    @GetMapping("/rule/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        try{
-            Rule rule = ruleService.findById(id);
-            model.addAttribute("rule", rule);
-            return "rule/update";
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, rule not found");
-            this.message = "Error : rule not found";
-            return REDIRECT_RULELIST_URL;
-        }
-    }
+	@PostMapping("/rule/update/{id}")
+	public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule,
+	                         BindingResult result, Model model) {
 
-    @PostMapping("/rule/update/{id}")
-    public String updateRule(@PathVariable("id") Integer id, @Valid Rule rule,
-                             BindingResult result, Model model) {
-        if(!result.hasErrors()){
-            rule.setId(id);
-            ruleService.save(rule);
-            model.addAttribute("rules", ruleService.findAll());
-            return REDIRECT_RULELIST_URL;
-        }
-        return "rule/update";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			rule.setId(id);
+			ruleService.save(rule);
+			log.info("rule with id " + id + " updated");
+			model.addAttribute("rules", ruleService.findAll());
+			return REDIRECT_RULELIST_URL;
+		}
+		log.info("result has error");
+		return "rule/update";
+	}
 
-    @GetMapping("/rule/delete/{id}")
-    public String deleteRule(@PathVariable("id") Integer id, Model model) {
-        try {
-            Rule rule = ruleService.findById(id);
-            ruleService.delete(rule);
-            model.addAttribute("rules", ruleService.findAll());
-            return REDIRECT_RULELIST_URL;
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, rule not found");
-            this.message = "Error : rule not found";
-            return REDIRECT_RULELIST_URL;           }
+	@GetMapping("/rule/delete/{id}")
+	public String deleteRule(@PathVariable("id") Integer id, Model model) {
 
-    }
+		try {
+			Rule rule = ruleService.findById(id);
+			log.info("rule with id " + id + " found");
+			ruleService.delete(rule);
+			log.info("rule with id " + id + " deleted");
+			model.addAttribute("rules", ruleService.findAll());
+			return REDIRECT_RULELIST_URL;
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, rule not found");
+			this.message = "Error : rule not found";
+			return REDIRECT_RULELIST_URL;
+		}
+	}
 }

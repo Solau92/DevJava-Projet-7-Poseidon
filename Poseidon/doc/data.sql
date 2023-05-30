@@ -12,7 +12,7 @@ CREATE TABLE bid (
   bid DOUBLE ,
   ask DOUBLE,
   benchmark VARCHAR(125),
-  bidListDate TIMESTAMP,
+  bidDate TIMESTAMP,
   commentary VARCHAR(125),
   security VARCHAR(125),
   status VARCHAR(10),
@@ -34,7 +34,7 @@ CREATE TABLE trade (
   id int NOT NULL AUTO_INCREMENT,
   account VARCHAR(30) NOT NULL,
   type VARCHAR(30) NOT NULL,
-  buyQuantity DOUBLE,
+  buyQuantity DOUBLE NOT NULL ,
   sellQuantity DOUBLE,
   buyPrice DOUBLE ,
   sellPrice DOUBLE,
@@ -69,9 +69,9 @@ CREATE TABLE curvepoint (
 
 CREATE TABLE rating (
   id int NOT NULL AUTO_INCREMENT,
-  moodysRating VARCHAR(125),
-  sandPRating VARCHAR(125),
-  fitchRating VARCHAR(125),
+  moodysRating VARCHAR(125) NOT NULL ,
+  sandPRating VARCHAR(125) NOT NULL ,
+  fitchRating VARCHAR(125) NOT NULL ,
   orderNumber int,
 
   PRIMARY KEY (Id)
@@ -79,7 +79,7 @@ CREATE TABLE rating (
 
 CREATE TABLE rule (
   id int NOT NULL AUTO_INCREMENT,
-  name VARCHAR(125),
+  name VARCHAR(125) NOT NULL ,
   description VARCHAR(125),
   json VARCHAR(125),
   template VARCHAR(512),
@@ -91,13 +91,13 @@ CREATE TABLE rule (
 
 CREATE TABLE users (
   id int NOT NULL AUTO_INCREMENT,
-  username VARCHAR(125) UNIQUE,
-  password VARCHAR(125),
-  fullname VARCHAR(125),
-  role VARCHAR(125),
+  username VARCHAR(125) NOT NULL UNIQUE,
+  password VARCHAR(125) NOT NULL ,
+  fullname VARCHAR(125) NOT NULL ,
+  role VARCHAR(125) NOT NULL ,
 
   PRIMARY KEY (Id)
 );
 
-insert into users(fullname, username, password, role) values("Administrator", "admin", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "ADMIN");
-insert into users(fullname, username, password, role) values("User", "user", "$10$pngFc7IEpAPQjHRikLYfUuLN8/Cg6UJWQm/b53t1dGjttWdriH3yq", "USER");
+insert into users(fullname, username, password, role) values("Administrator", "admin", "$2a$10$7qCkRp8p20d7Mv2FRv5OW.WXEA58PzlO4PHbjroK2NgrvS44jkrt6", "ADMIN");
+insert into users(fullname, username, password, role) values("User", "user", "$2a$10$7qCkRp8p20d7Mv2FRv5OW.WXEA58PzlO4PHbjroK2NgrvS44jkrt6", "USER");

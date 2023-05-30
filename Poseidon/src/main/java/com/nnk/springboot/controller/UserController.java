@@ -17,88 +17,96 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserController {
 
-    private UserServiceImpl userService;
-
-    String message;
-
-    private static String REDIRECT_USERLIST_URL = "redirect:/user/list";
+	private static String REDIRECT_USERLIST_URL = "redirect:/user/list";
+	String message;
+	private UserServiceImpl userService;
 
 
-    public UserController(UserServiceImpl userService){
-        this.userService = userService;
-    }
+	public UserController(UserServiceImpl userService) {
+		this.userService = userService;
+	}
 
-    @RequestMapping("/user/list")
-    public String home(Model model)
-    {
-        model.addAttribute("users", userService.findAll());
-        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
-        model.addAttribute("message", message);
-        return "user/list";
-    }
+	@RequestMapping("/user/list")
+	public String home(Model model) {
+		model.addAttribute("users", userService.findAll());
+		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("message", message);
+		log.info("user/list page display");
+		return "user/list";
+	}
 
-    @GetMapping("/user/add")
-    public String addUserForm(User bid) {
-        return "user/add";
-    }
+	@GetMapping("/user/add")
+	public String addUserForm(User bid) {
+		log.info("user/add page display");
+		return "user/add";
+	}
 
-    @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result, Model model) {
+	@PostMapping("/user/validate")
+	public String validate(@Valid User user, BindingResult result, Model model) {
 
-        if(userService.findByUserName(user.getUsername()) != null) {
-            result.rejectValue("username", null, "There is already an account registered with this username");
-            return "user/add";
-        }
+		if (userService.findByUsername(user.getUsername()) != null) {
+			log.info("result has error : already an account registered with the username");
+			result.rejectValue("username", null, "There is already an account registered with this username");
+			return "user/add";
+		}
 
-        if (!result.hasErrors()) {
-            userService.save(user);
-            model.addAttribute("users", userService.findAll());
-            return REDIRECT_USERLIST_URL;
-        }
-        return "user/add";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			userService.save(user);
+			model.addAttribute("users", userService.findAll());
+			return REDIRECT_USERLIST_URL;
+		}
+		log.info("result has error");
+		return "user/add";
+	}
 
-    @GetMapping("/user/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+	@GetMapping("/user/update/{id}")
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
-        try{
-            User user = userService.findById(id);
-            user.setPassword("");
-            model.addAttribute("user", user);
-            return "user/update";
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, user not found");
-            this.message = "Error : user not found";
-            return REDIRECT_USERLIST_URL;
-        }
+		try {
+			User user = userService.findById(id);
+			log.info("user with id " + id + " found");
+			user.setPassword("");
+			model.addAttribute("user", user);
+			return "user/update";
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, user not found");
+			this.message = "Error : user not found";
+			return REDIRECT_USERLIST_URL;
+		}
+	}
 
-    }
+	@PostMapping("/user/update/{id}")
+	public String updateUser(@PathVariable("id") Integer id, @Valid User user,
+	                         BindingResult result, Model model) {
 
-    @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
-                             BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            user.setId(id);
-            userService.save(user);
-            model.addAttribute("users", userService.findAll());
-            return REDIRECT_USERLIST_URL;
-        }
-        return "user/update";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			user.setId(id);
+			userService.save(user);
+			log.info("user with id " + id + " updated");
+			model.addAttribute("users", userService.findAll());
+			return REDIRECT_USERLIST_URL;
+		}
+		log.info("result has error");
+		return "user/update";
+	}
 
-    @GetMapping("/user/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model) {
+	@GetMapping("/user/delete/{id}")
+	public String deleteUser(@PathVariable("id") Integer id, Model model) {
 
-        try {
-            User user = userService.findById(id);
-            userService.delete(user);
-            model.addAttribute("users", userService.findAll());
-            return REDIRECT_USERLIST_URL;
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, user not found");
-            this.message = "Error : user not found";
-            return REDIRECT_USERLIST_URL;
-        }
+		try {
+			User user = userService.findById(id);
+			log.info("user with id " + id + " found");
+			userService.delete(user);
+			log.info("user with id " + id + " deleted");
+			model.addAttribute("users", userService.findAll());
+			return REDIRECT_USERLIST_URL;
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, user not found");
+			this.message = "Error : user not found";
+			return REDIRECT_USERLIST_URL;
+		}
 
-    }
+	}
 }

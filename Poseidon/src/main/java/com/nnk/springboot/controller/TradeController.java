@@ -18,80 +18,91 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TradeController {
 
-    private TradeServiceImpl tradeService;
+	private static String REDIRECT_TRADELIST_URL = "redirect:/trade/list";
+	private TradeServiceImpl tradeService;
+	private UserServiceImpl userService;
+	private String message;
 
-    private UserServiceImpl userService;
+	public TradeController(TradeServiceImpl tradeService, UserServiceImpl userService) {
+		this.tradeService = tradeService;
+		this.userService = userService;
+	}
 
-    private String message;
+	@RequestMapping("/trade/list")
+	public String home(Model model) {
+		model.addAttribute("trades", tradeService.findAll());
+		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
+		model.addAttribute("role", userService.getLoggedUser().getRole());
+		model.addAttribute("message", message);
+		log.info("trade/list page display");
+		return "trade/list";
+	}
 
-    private static String REDIRECT_TRADELIST_URL = "redirect:/trade/list";
+	@GetMapping("/trade/add")
+	public String addTradeForm(Trade trade) {
+		log.info("trade/add page display");
+		return "trade/add";
+	}
 
-    public TradeController(TradeServiceImpl tradeService, UserServiceImpl userService){
-        this.tradeService = tradeService;
-        this.userService = userService;
-    }
+	@PostMapping("/trade/validate")
+	public String validate(@Valid Trade trade, BindingResult result, Model model) {
 
-    @RequestMapping("/trade/list")
-    public String home(Model model)
-    {
-        model.addAttribute("trades", tradeService.findAll());
-        model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
-        model.addAttribute("role", userService.getLoggedUser().getRole());
-        model.addAttribute("message", message);
-        return "trade/list";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			tradeService.save(trade);
+			log.info("trade saved");
+			model.addAttribute("trades", tradeService.findAll());
+			return REDIRECT_TRADELIST_URL;
+		}
+		log.info("result has error");
+		return "trade/add";
+	}
 
-    @GetMapping("/trade/add")
-    public String addTradeForm(Trade trade) {
-        return "trade/add";
-    }
+	@GetMapping("/trade/update/{id}")
+	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
 
-    @PostMapping("/trade/validate")
-    public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            tradeService.save(trade);
-            model.addAttribute("trades", tradeService.findAll());
-            return REDIRECT_TRADELIST_URL;
-        }
-        return "trade/add";
-    }
+		try {
+			Trade trade = tradeService.findById(id);
+			log.info("trade with id " + id + " found");
+			model.addAttribute("trade", trade);
+			return "trade/update";
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, trade not found");
+			this.message = "Error : trade not found";
+			return REDIRECT_TRADELIST_URL;
+		}
+	}
 
-    @GetMapping("/trade/update/{id}")
-    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        try{
-            Trade trade = tradeService.findById(id);
-            model.addAttribute("trade", trade);
-            return "trade/update";
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, trade not found");
-            this.message = "Error : trade not found";
-            return REDIRECT_TRADELIST_URL;
-        }
-    }
+	@PostMapping("/trade/update/{id}")
+	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
+	                          BindingResult result, Model model) {
 
-    @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                             BindingResult result, Model model) {
-        if(!result.hasErrors()){
-            trade.setId(id);
-           tradeService.save(trade);
-            model.addAttribute("trades", tradeService.findAll());
-            return REDIRECT_TRADELIST_URL;
-        }
-        return "trade/update";
-    }
+		if (!result.hasErrors()) {
+			log.info("result has no error");
+			trade.setId(id);
+			tradeService.save(trade);
+			log.info("trade with id " + id + " updated");
+			model.addAttribute("trades", tradeService.findAll());
+			return REDIRECT_TRADELIST_URL;
+		}
+		log.info("result has error");
+		return "trade/update";
+	}
 
-    @GetMapping("/trade/delete/{id}")
-    public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-        try {
-            Trade trade = tradeService.findById(id);
-            tradeService.delete(trade);
-            model.addAttribute("trades", tradeService.findAll());
-            return REDIRECT_TRADELIST_URL;
-        } catch (IllegalArgumentException exception){
-            log.error("Illegal Argument Exception, trade not found");
-            this.message = "Error : trade not found";
-            return REDIRECT_TRADELIST_URL;
-        }
-    }
+	@GetMapping("/trade/delete/{id}")
+	public String deleteTrade(@PathVariable("id") Integer id, Model model) {
+
+		try {
+			Trade trade = tradeService.findById(id);
+			log.info("trade with id " + id + " found");
+			tradeService.delete(trade);
+			log.info("trade with id " + id + " deleted");
+			model.addAttribute("trades", tradeService.findAll());
+			return REDIRECT_TRADELIST_URL;
+		} catch (IllegalArgumentException exception) {
+			log.error("Illegal Argument Exception, trade not found");
+			this.message = "Error : trade not found";
+			return REDIRECT_TRADELIST_URL;
+		}
+	}
 }

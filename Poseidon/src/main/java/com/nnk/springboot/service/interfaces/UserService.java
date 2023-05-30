@@ -14,9 +14,7 @@ public interface UserService {
 
 	void delete(User user);
 
-	User findByUserName(String username);
-
 	User getLoggedUser();
 
-
+	User findByUsername(String username);
 }

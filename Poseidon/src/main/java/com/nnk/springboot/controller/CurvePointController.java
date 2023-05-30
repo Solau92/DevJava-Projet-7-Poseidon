@@ -18,13 +18,10 @@ import jakarta.validation.Valid;
 @Controller
 public class CurvePointController {
 
-	private CurvePointServiceImpl curvePointService;
-
-	private UserServiceImpl userService;
-
-	private String message;
-
 	private static String REDIRECT_CURVEPOINTLIST_URL = "redirect:/curvePoint/list";
+	private CurvePointServiceImpl curvePointService;
+	private UserServiceImpl userService;
+	private String message;
 
 
 	public CurvePointController(CurvePointServiceImpl curvePointService, UserServiceImpl userService) {
@@ -38,22 +35,27 @@ public class CurvePointController {
 		model.addAttribute("loggedUser", userService.getLoggedUser().getUsername());
 		model.addAttribute("role", userService.getLoggedUser().getRole());
 		model.addAttribute("message", message);
+		log.info("curvePoint/list page display");
 		return "curvePoint/list";
 	}
 
 	@GetMapping("/curvePoint/add")
 	public String addBidForm(CurvePoint bid) {
+		log.info("curvePoint/add page display");
 		return "curvePoint/add";
 	}
 
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 
-		if(!result.hasErrors()) {
+		if (!result.hasErrors()) {
+			log.info("result has no error");
 			curvePointService.save(curvePoint);
+			log.info("curvePoint saved");
 			model.addAttribute("curvePoints", curvePointService.findAll());
 			return REDIRECT_CURVEPOINTLIST_URL;
 		}
+		log.info("result has error");
 		return "curvePoint/add";
 	}
 
@@ -62,25 +64,30 @@ public class CurvePointController {
 
 		try {
 			CurvePoint curvePoint = curvePointService.findById(id);
+			log.info("curvePoint with id " + id + " found");
 			model.addAttribute("curvePoint", curvePoint);
 			return "curvePoint/update";
 
-		} catch (IllegalArgumentException exception){
+		} catch (IllegalArgumentException exception) {
 			log.error("Illegal Argument Exception, curve point not found");
 			this.message = "Error : curve point not found";
-			return REDIRECT_CURVEPOINTLIST_URL;		}
+			return REDIRECT_CURVEPOINTLIST_URL;
+		}
 	}
 
 	@PostMapping("/curvePoint/update/{id}")
 	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
 	                        BindingResult result, Model model) {
 
-		if(!result.hasErrors()){
+		if (!result.hasErrors()) {
+			log.info("result has no error");
 			curvePoint.setId(id);
 			curvePointService.save(curvePoint);
+			log.info("curvePoint with id " + id + " updated");
 			model.addAttribute("curvePoints", curvePointService.findAll());
 			return REDIRECT_CURVEPOINTLIST_URL;
 		}
+		log.info("result has error");
 		return "curvePoint/update";
 	}
 
@@ -89,13 +96,16 @@ public class CurvePointController {
 
 		try {
 			CurvePoint curvePoint = curvePointService.findById(id);
+			log.info("curvePoint with id " + id + " found");
 			curvePointService.delete(curvePoint);
+			log.info("curvePoint with id " + id + " deleted");
 			model.addAttribute("curvePoints", curvePointService.findAll());
 			return REDIRECT_CURVEPOINTLIST_URL;
 
 		} catch (IllegalArgumentException exception) {
 			log.error("Illegal Argument Exception, curve point not found");
 			this.message = "Error : curve point not found";
-			return REDIRECT_CURVEPOINTLIST_URL;		}
+			return REDIRECT_CURVEPOINTLIST_URL;
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.nnk.springboot.config.security;
+package com.nnk.springboot.config;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repository.UserRepository;
