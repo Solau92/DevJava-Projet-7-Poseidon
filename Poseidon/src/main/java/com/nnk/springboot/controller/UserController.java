@@ -66,7 +66,6 @@ public class UserController {
 		try {
 			User user = userService.findById(id);
 			log.info("user with id " + id + " found");
-			user.setPassword("");
 			model.addAttribute("user", user);
 			return "user/update";
 		} catch (IllegalArgumentException exception) {

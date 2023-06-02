@@ -7,7 +7,7 @@ CREATE TABLE bid (
   bid DOUBLE ,
   ask DOUBLE,
   benchmark VARCHAR(125),
-  bidListDate TIMESTAMP,
+  bidDate TIMESTAMP,
   commentary VARCHAR(125),
   security VARCHAR(125),
   status VARCHAR(10),
