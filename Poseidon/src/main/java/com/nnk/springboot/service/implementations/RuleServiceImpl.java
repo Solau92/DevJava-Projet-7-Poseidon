@@ -19,16 +19,34 @@ public class RuleServiceImpl implements RuleService {
 		this.ruleRepository = ruleRepository;
 	}
 
+	/**
+	 * Returns all the rules in database.
+	 *
+	 * @return a List<Rule>
+	 */
 	@Override
 	public List<Rule> findAll() {
 		return ruleRepository.findAll();
 	}
 
+	/**
+	 * Saves the given rule point in database.
+	 *
+	 * @param rule
+	 * @return the rule saved
+	 */
 	@Override
 	public Rule save(Rule rule) {
 		return ruleRepository.save(rule);
 	}
 
+	/**
+	 * Searches in database a rule given an id.
+	 *
+	 * @param id
+	 * @return the rule if found
+	 * @throws IllegalArgumentException if the rule was not found
+	 */
 	@Override
 	public Rule findById(Integer id) {
 		Optional<Rule> optionalR = ruleRepository.findById(id);
@@ -40,6 +58,12 @@ public class RuleServiceImpl implements RuleService {
 		return optionalR.get();
 	}
 
+	/**
+	 * Deletes in database the given curve rule.
+	 *
+	 * @param rule
+	 * @throws IllegalArgumentException if the rule was not found
+	 */
 	@Override
 	public void delete(Rule rule) {
 

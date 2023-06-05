@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 
+/**
+ * Controller that manage curve point pages (curvePoint/add, curvePoint/list, curvePoint/update)
+ */
 @Slf4j
 @Controller
 public class CurvePointController {

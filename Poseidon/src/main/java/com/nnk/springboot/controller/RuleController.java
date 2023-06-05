@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
+/**
+ * Controller that manage rule pages (rule/add, rule/list, rule/update)
+ */
 @Slf4j
 @Controller
 public class RuleController {

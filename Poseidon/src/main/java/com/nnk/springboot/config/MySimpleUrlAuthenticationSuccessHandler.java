@@ -20,19 +20,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * Implements AuthenticationSuccessHandler, used to handle a successful user authentication.
+ * Must specify the redirection URL in case of successful login, for both admin and users.
+ */
 public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
 	protected Log logger = LogFactory.getLog(this.getClass());
 
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+	/**
+	 * Called when a user has been successfully authenticated.
+	 *
+	 * @param request
+	 * @param response
+	 * @param chain
+	 * @param authentication
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);
-
 	}
 
+	/**
+	 * Called when a user has been successfully authenticated.
+	 *
+	 * @param request
+	 * @param response
+	 * @param authentication
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		handle(request, response, authentication);

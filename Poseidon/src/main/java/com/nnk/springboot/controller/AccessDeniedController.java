@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controller that manage access-denied page
+ */
 @Slf4j
 @Controller
 public class AccessDeniedController {

@@ -19,16 +19,35 @@ public class BidServiceImpl implements BidService {
 		this.bidRepository = bidRepository;
 	}
 
+	/**
+	 * Returns all the bids in database.
+	 *
+	 * @return a List<Bid>
+	 */
 	@Override
 	public List<Bid> findAll() {
 		return bidRepository.findAll();
 	}
 
+	/**
+	 * Saves the given bid in database.
+	 *
+	 * @param bid
+	 * @return the bid saved
+	 */
 	@Override
 	public Bid save(Bid bid) {
 		return bidRepository.save(bid);
 	}
 
+	/**
+	 * Searches in database a bid given an id.
+	 *
+	 * @param id
+	 * @return the bid if found
+	 * @throws IllegalArgumentException if the bid was not found
+	 */
+	@Override
 	public Bid findById(Integer id) throws IllegalArgumentException {
 
 		Optional<Bid> optionalBL = bidRepository.findById(id);
@@ -40,6 +59,13 @@ public class BidServiceImpl implements BidService {
 		return optionalBL.get();
 	}
 
+	/**
+	 * Deletes in database the given bid.
+	 *
+	 * @param bid
+	 * @throws IllegalArgumentException if the bid was not found
+	 */
+	@Override
 	public void delete(Bid bid) {
 		Optional<Bid> optionalBL = bidRepository.findById(bid.getId());
 		if (optionalBL.isEmpty()) {

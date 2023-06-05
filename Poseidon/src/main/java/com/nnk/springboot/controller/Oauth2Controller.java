@@ -19,6 +19,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
+/**
+ * Controller that manage Oauth2 login
+ */
 @Slf4j
 @Controller
 public class Oauth2Controller {

@@ -20,16 +20,34 @@ public class CurvePointServiceImpl implements CurvePointService {
 		this.curvePointRepository = curvePointRepository;
 	}
 
+	/**
+	 * Returns all the curve points in database.
+	 *
+	 * @return a List<CurvePoint>
+	 */
 	@Override
 	public List<CurvePoint> findAll() {
 		return curvePointRepository.findAll();
 	}
 
+	/**
+	 * Saves the given curve point in database.
+	 *
+	 * @param curvePoint
+	 * @return the curve point saved
+	 */
 	@Override
 	public CurvePoint save(CurvePoint curvePoint) {
 		return curvePointRepository.save(curvePoint);
 	}
 
+	/**
+	 * Searches in database a curve point given an id.
+	 *
+	 * @param id
+	 * @return the curve point if found
+	 * @throws IllegalArgumentException if the curve point was not found
+	 */
 	@Override
 	public CurvePoint findById(Integer id) {
 
@@ -42,6 +60,12 @@ public class CurvePointServiceImpl implements CurvePointService {
 		return optionalCP.get();
 	}
 
+	/**
+	 * Deletes in database the given curve point.
+	 *
+	 * @param curvePoint
+	 * @throws IllegalArgumentException if the curve point was not found
+	 */
 	@Override
 	public void delete(CurvePoint curvePoint) {
 

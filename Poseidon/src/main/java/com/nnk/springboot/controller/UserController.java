@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+/**
+ * Controller that manage user pages (user/add, user/list, user/update)
+ */
 @Slf4j
 @Controller
 public class UserController {

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller that manage bid pages (bid/add, bid/list, bid/update)
+ */
 @Slf4j
 @Controller
 public class BidController {

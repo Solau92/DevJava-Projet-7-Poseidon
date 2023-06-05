@@ -19,16 +19,34 @@ public class RatingServiceImpl implements RatingService {
 		this.ratingRepository = ratingRepository;
 	}
 
+	/**
+	 * Returns all the ratings in database.
+	 *
+	 * @return a List<Rating>
+	 */
 	@Override
 	public List<Rating> findAll() {
 		return ratingRepository.findAll();
 	}
 
+	/**
+	 * Saves the given rating in database.
+	 *
+	 * @param rating
+	 * @return the rating saved
+	 */
 	@Override
 	public Rating save(Rating rating) {
 		return ratingRepository.save(rating);
 	}
 
+	/**
+	 * Searches in database a trade given an id.
+	 *
+	 * @param id
+	 * @return the rating if found
+	 * @throws IllegalArgumentException if the rating was not found
+	 */
 	@Override
 	public Rating findById(Integer id) {
 
@@ -41,6 +59,12 @@ public class RatingServiceImpl implements RatingService {
 		return optionalR.get();
 	}
 
+	/**
+	 * Deletes in database the given rating.
+	 *
+	 * @param rating
+	 * @throws IllegalArgumentException if the rating was not found
+	 */
 	@Override
 	public void delete(Rating rating) {
 

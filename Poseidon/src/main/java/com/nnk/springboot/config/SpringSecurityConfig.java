@@ -31,6 +31,12 @@ public class SpringSecurityConfig {
 		return new MySimpleUrlAuthenticationSuccessHandler();
 	}
 
+	/**
+	 * Speciry the filter chain of the app.
+	 * @param http
+	 * @return SecurityFilterChain
+	 * @throws Exception
+	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 

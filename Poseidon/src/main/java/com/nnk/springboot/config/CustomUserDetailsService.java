@@ -13,6 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implements UserDetailsService.
+ * Loads user-specific data.
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -22,6 +26,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 
+	/**
+	 * Locates the user based on the username.
+	 *
+	 * @param username identifiying the user whose data is required
+	 * @return a fully populated user record
+	 * @throws UsernameNotFoundException
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

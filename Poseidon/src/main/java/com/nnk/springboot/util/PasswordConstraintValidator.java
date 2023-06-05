@@ -9,11 +9,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
+
 	@Override
 	public void initialize(ValidPassword constraintAnnotation) {
 		ConstraintValidator.super.initialize(constraintAnnotation);
 	}
 
+	/**
+	 * Returns true if the given password is valid, false otherwise.
+	 *
+	 * @param password
+	 * @param context
+	 * @return true if the password is valid, false otherwise
+	 */
 	@Override
 	public boolean isValid(String password, ConstraintValidatorContext context) {
 

@@ -24,11 +24,22 @@ public class UserServiceImpl implements UserService {
 		this.userRepository = userRepository;
 	}
 
+	/**
+	 * Returns all the users in database.
+	 *
+	 * @return a List<User>
+	 */
 	@Override
 	public List<User> findAll() {
 		return userRepository.findAll();
 	}
 
+	/**
+	 * Encodes password and saves the given user in database.
+	 *
+	 * @param user
+	 * @return the user saved
+	 */
 	@Override
 	public User save(User user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -36,6 +47,13 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * Searches in database a user given an id.
+	 *
+	 * @param id
+	 * @return the user if found
+	 * @throws IllegalArgumentException if the user was not found
+	 */
 	@Override
 	public User findById(Integer id) {
 
@@ -48,6 +66,12 @@ public class UserServiceImpl implements UserService {
 		return optionalU.get();
 	}
 
+	/**
+	 * Deletes in database the given user.
+	 *
+	 * @param user
+	 * @throws IllegalArgumentException if the user was not found
+	 */
 	@Override
 	public void delete(User user) {
 
@@ -59,6 +83,11 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
+	/**
+	 * Returns the current logged user.
+	 *
+	 * @return User
+	 */
 	@Override
 	public User getLoggedUser() {
 
@@ -77,6 +106,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * Searches in database a user given a username.
+	 *
+	 * @param username
+	 * @return the user if found
+	 */
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);

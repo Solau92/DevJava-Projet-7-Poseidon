@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 
 
+/**
+ * Controller that manage rating pages (rating/add, rating/list, rating/update)
+ */
 @Slf4j
 @Controller
 public class RatingController {

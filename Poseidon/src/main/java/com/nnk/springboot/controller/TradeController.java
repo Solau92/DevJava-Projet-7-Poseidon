@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+/**
+ * Controller that manage trade pages (trade/add, trade/list, trade/update)
+ */
 @Slf4j
 @Controller
 public class TradeController {
